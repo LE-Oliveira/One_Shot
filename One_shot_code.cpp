@@ -16,6 +16,7 @@ class item{
 
 class battle_item{
     public:
+        string name;
         int bonus, price;
         bool equiped;
 };
@@ -171,7 +172,7 @@ personagem battle(personagem character){
                 if (attack==1){
                     turn = false;
                     srand(time(NULL));
-                    if (hit==20){
+                    if ((hit+character.wweapon.bonus/5)>=20){
                         damage = 2*damage;
                         wolf.hp = wolf.hp - damage;
                         cout << "Congrats, critical slash" << endl;
@@ -643,9 +644,33 @@ personagem inventory(personagem character){
     cout << "3 - Go back to previous Menu" << endl;
     system("pause");
     cin >> aux;
-    if (aux==1){
-        for (aux=0;aux<50;aux++)
-            if item
+    if (aux == 1){
+        if (character.sweapon.equiped){
+            cout << "Your strong weapon is " << character.sweapon.name << " which gives + " << character.sweapon.bonus << " in the attacks" << endl;
+        }
+        else{
+            cout << "You have no equiped strong weapon" << endl;
+        }
+        if (character.wweapon.equiped){
+            cout << "Your weak weapon is " << character.wweapon.name << " which gives + " << character.wweapon.bonus << " in the attacks" << endl;
+        }
+        else{
+            cout << "You have no equiped weak weapon" << endl;
+        }
+        if (character.armor.equiped){
+            cout << "You are wearing the " << character.armor.name << "which gives + " << character.armor.bonus << " in the defense" << endl;
+        }
+        else{
+            cout << "You have no equiped armor" << endl;
+        }
+        
+    }
+    else if (aux==2){
+        for (aux=0;aux<50;aux++){
+            if (character.item[i].amount > 0){
+                cout << "You have " << character.item[i].amount << " units of " << character.item[i].name << endl;
+            }
+        }
     }
     return character;
 }
@@ -659,8 +684,8 @@ int main(){
     int aux, aux1;
     personagem perso;
     item basic_dagger, basic_bow;
-    //perso.sweapon.owner = perso.name;
-    //perso.wweapon.owner = perso.name;
+    perso.sweapon.name = "Short Bow";
+    perso.wweapon.name = "Iron Dagger";
     perso.sweapon.price = 2500;
     perso.wweapon.price = 200;
     perso.sweapon.bonus = 0;
