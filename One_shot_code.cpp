@@ -635,15 +635,15 @@ personagem battle(personagem character){
     return character;
 }
 
-personagem inventory(personagem character){
-    int aux;
+void inventory(personagem character){
+    int aux, i = 0;
     system("cls");
     cout << "Inventory Menu" << endl;
     cout << "1 - See Battle Items" << endl;
     cout << "2 - See Other Items" << endl;
     cout << "3 - Go back to previous Menu" << endl;
-    system("pause");
     cin >> aux;
+    system("cls");
     if (aux == 1){
         if (character.sweapon.equiped){
             cout << "Your strong weapon is " << character.sweapon.name << " which gives + " << character.sweapon.bonus << " in the attacks" << endl;
@@ -663,20 +663,63 @@ personagem inventory(personagem character){
         else{
             cout << "You have no equiped armor" << endl;
         }
-        
     }
     else if (aux==2){
         for (aux=0;aux<50;aux++){
-            if (character.item[i].amount > 0){
-                cout << "You have " << character.item[i].amount << " units of " << character.item[i].name << endl;
+            if (character.items[aux].amount > 0){
+                cout << "You have " << character.items[aux].amount << " units of " << character.items[aux].name << endl;
+                i++;
             }
         }
+        if (i==0){
+            cout << "You have no other items. Battle to find items" << endl;
+        }
     }
-    return character;
 }
 
 personagem store(personagem character){
-
+    int opt, qtd;
+    char ans;
+    cout << "Seja bem-vindx a loja" << endl;
+    cout << "1 - Vender Itens" << endl;
+    cout << "2 - Comprar Itens" << endl;
+    cout << "3 - Voltar ao Menu Principal"
+    cin >> opt ;
+    system("cls");
+    if(opt == 1){
+        for (qtd=0;qtd>50;qtd++){
+            if (character.items[qtd].amount>0){
+                cout << character.items[qtd].name << ": " << character.items[qtd].price << endl;
+            }
+            cout << "Voce deseja vender todos[T], alguns[A] ou nenhum[N]?" << endl;
+            cin >> ans;
+            system("cls");
+            if (ans == "T"){
+                character.items[qtd] = NULL;
+                character.money = character.money + character.items[qtd].price*character.items[qtd].amount;
+            }
+            else if (ans == "A"){
+                cout << "Quantos?" << endl;
+                cin >> opt;
+                while (opt>character.items[qtd].amount){
+                    system("cls");
+                    cout << "Por favor, insira um valor válido" << endl;
+                    cin >> opt;
+                }
+                character.items[qtd].amount = character.items[qtd].amount - opt;
+                character.money = character.money + character.items[qtd].amount*character.items[qtd].price;
+            }
+            else{}
+            system("cls");
+        }
+        
+    }
+    else if(opt ==2){
+        cout << 
+    }
+    else if(opt == 3){
+        return character;
+    }
     return character;
 }
 
@@ -684,21 +727,23 @@ int main(){
     int aux, aux1;
     personagem perso;
     item basic_dagger, basic_bow;
+    perso.lvl = 2;
     perso.sweapon.name = "Short Bow";
     perso.wweapon.name = "Iron Dagger";
     perso.sweapon.price = 2500;
     perso.wweapon.price = 200;
     perso.sweapon.bonus = 0;
     perso.wweapon.bonus = 0;
+    perso.sweapon.equiped = true;
+    perso.wweapon.equiped = true;
     perso.money = 0;
-    perso.upgrades = 10;
+    perso.upgrades = perso.lvl*10;
     perso.xp = 0;
     perso.atk = 1;
     perso.def = 1;
     perso.dex = 1;
     perso.luck = 1;
     perso.vit = 1;
-    perso.lvl = 1;
     perso.hp = 10 + 2*perso.vit;
     cout << "Welcome to this chaotic world, where villages are wiped out by monsters and heroes are lacking" << endl;
     system("pause");
@@ -789,7 +834,7 @@ int main(){
         }
         else if ((aux==3)&&(perso.lvl>1)){
             system("cls");
-            cout << "Sorry, this is still in development" << endl;
+            inventory(perso);
             system("pause");
         }
         else if ((aux==4)&&(perso.lvl==2)){
@@ -799,7 +844,7 @@ int main(){
         }
         else if ((aux==4)&&(perso.lvl>2)){
             system("cls");
-            cout << "Sorry, this is still in development" << endl;
+            perso = store(perso) << endl;
             system("pause");
         }
         else if ((aux==5)&&(perso.lvl>2)){
