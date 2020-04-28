@@ -14,17 +14,25 @@ class item{
         int price, amount = 0;
 };
 
-class battle_item{
+class weapon{
     public:
         string name;
-        int bonus, price;
-        bool equiped;
+        int bonus, price, amount;
+        bool equiped, owned;
+};
+
+class armour{
+    public:
+        string name;
+        int bonus, price, amount;
+        bool equiped, owned;
 };
 
 class personagem{
     public:
         int def, atk, dex, luck, vit, lvl, upgrades, xp, hp, money;
-        battle_item sweapon, wweapon, armor;
+        weapon weapons[10];
+        armour armors[5];
         item items[50];
         char name[20];
 };
@@ -172,7 +180,7 @@ personagem battle(personagem character){
                 if (attack==1){
                     turn = false;
                     srand(time(NULL));
-                    if ((hit+character.wweapon.bonus/5)>=20){
+                    if ((hit+character.weapons[1].bonus/5)>=20){
                         damage = 2*damage;
                         wolf.hp = wolf.hp - damage;
                         cout << "Congrats, critical slash" << endl;
@@ -645,20 +653,20 @@ void inventory(personagem character){
     cin >> aux;
     system("cls");
     if (aux == 1){
-        if (character.sweapon.equiped){
-            cout << "Your strong weapon is " << character.sweapon.name << " which gives + " << character.sweapon.bonus << " in the attacks" << endl;
+        if (character.weapons[0].equiped){
+            cout << "Your strong weapon is " << character.weapons[0].name << " which gives + " << character.weapons[0].bonus << " in the attacks" << endl;
         }
         else{
             cout << "You have no equiped strong weapon" << endl;
         }
-        if (character.wweapon.equiped){
-            cout << "Your weak weapon is " << character.wweapon.name << " which gives + " << character.wweapon.bonus << " in the attacks" << endl;
+        if (character.weapons[1].equiped){
+            cout << "Your weak weapon is " << character.weapons[1].name << " which gives + " << character.weapons[1].bonus << " in the attacks" << endl;
         }
         else{
             cout << "You have no equiped weak weapon" << endl;
         }
-        if (character.armor.equiped){
-            cout << "You are wearing the " << character.armor.name << "which gives + " << character.armor.bonus << " in the defense" << endl;
+        if (character.armors[0].equiped){
+            cout << "You are wearing the " << character.armors[0].name << "which gives + " << character.armors[0].bonus << " in the defense" << endl;
         }
         else{
             cout << "You have no equiped armor" << endl;
@@ -679,43 +687,113 @@ void inventory(personagem character){
 
 personagem store(personagem character){
     int opt, qtd;
-    char ans;
+    weapon long_bow, short_sword, spear, battle_axe;
+    long_bow.name = "Arco Longo";
+    long_bow.bonus = 2;
+    long_bow.price = 5000;
+    long_bow.equiped = false;
+    short_sword.name = "Espada Curta";
+    short_sword.bonus = 2;
+    short_sword.price = 1000;
+    short_sword.equiped = false;
+    spear.name = "Lança";
+    spear.bonus = 2;
+    spear.price = 100;
+    spear.equiped = false;
+    battle_axe.name = "Machado de Batalha";
+    battle_axe.bonus = 2;
+    battle_axe.price = 3000;
+    battle_axe.equiped = false;
+    if (character.lvl == 4){
+        weapon scythe;
+        scythe.name = "Foice";
+        scythe.bonus = 3;
+        scythe.price = 5000;
+        scythe.equiped = false;
+    }
     cout << "Seja bem-vindx a loja" << endl;
     cout << "1 - Vender Itens" << endl;
     cout << "2 - Comprar Itens" << endl;
-    cout << "3 - Voltar ao Menu Principal"
+    cout << "3 - Voltar ao Menu Principal" <<endl;
     cin >> opt ;
     system("cls");
     if(opt == 1){
-        for (qtd=0;qtd>50;qtd++){
-            if (character.items[qtd].amount>0){
-                cout << character.items[qtd].name << ": " << character.items[qtd].price << endl;
-            }
-            cout << "Voce deseja vender todos[T], alguns[A] ou nenhum[N]?" << endl;
-            cin >> ans;
-            system("cls");
-            if (ans == "T"){
-                character.items[qtd] = NULL;
-                character.money = character.money + character.items[qtd].price*character.items[qtd].amount;
-            }
-            else if (ans == "A"){
-                cout << "Quantos?" << endl;
-                cin >> opt;
-                while (opt>character.items[qtd].amount){
-                    system("cls");
-                    cout << "Por favor, insira um valor válido" << endl;
-                    cin >> opt;
-                }
-                character.items[qtd].amount = character.items[qtd].amount - opt;
-                character.money = character.money + character.items[qtd].amount*character.items[qtd].price;
-            }
-            else{}
-            system("cls");
-        }
-        
+       cout << "Em manutencao, aguarde proximas atualizacoes" << endl; 
     }
+    /*if(opt==1){
+        for (opt=0;opt<10;opt++){
+            if ((character.weapons[opt].amount>0)&&(character.weapons[opt].equiped = false)){
+                qtd++;
+            }
+        }
+        for (opt=0;opt<5;opt++){
+            if ((character.armors[opt].amount>0)&&(character.armors[opt].equiped = false)){
+                qtd++;
+            }
+        }
+        cout << "Deseja vender itens[I] ou armas[W] ou armaduras[A]?" << endl;
+        cin >> opt; //tá dando bug isso aqui
+        system("cls");
+        if ((opt == 73)||(opt == 105)){
+            for (qtd=0;qtd<50;qtd++){
+                if (character.items[qtd].amount>0){
+                    cout << character.items[qtd].name << ": " << character.items[qtd].price << endl;
+                    cout << "Voce deseja vender todos[T], alguns[A] ou nenhum[N]?" << endl;
+                    cin >> opt;
+                    system("cls");
+                    if ((opt == 84)||(opt == 116)){
+                        character.items[qtd].amount = 0;
+                        character.money = character.money + character.items[qtd].price*character.items[qtd].amount;
+                    }
+                    else if ((opt == 65)||(opt == 97)){
+                        cout << "Quantos?" << endl;
+                        cin >> opt;
+                        while (opt>character.items[qtd].amount){
+                            system("cls");
+                            cout << "Por favor, insira um valor válido" << endl;
+                            cin >> opt;
+                        }
+                        character.items[qtd].amount = character.items[qtd].amount - opt;
+                        character.money = character.money + character.items[qtd].amount*character.items[qtd].price;
+                    }
+                    system("cls");
+                }
+
+            }
+        }
+        else if((opt == 87)||(opt == 119)){
+            for (qtd=0;qtd<10;qtd++){
+                if ((!character.weapons[qtd].equiped)&&(character.weapons[qtd].owned)){
+                    cout << "Voce nao esta usando " << character.weapons[qtd].name << endl;
+                    cout << "Nos podemos lhe pagar " << ceil(character.weapons[qtd].price*0.9) << endl;
+                    cout << "Deseja vender[S/N]?" << endl;
+                    cin >> opt;
+                    if ((opt == 83)||(opt == 115)){
+                        character.money = character.money + ceil(character.weapons[qtd].price*0.9);
+                        character.weapons[qtd].amount = 0;
+                    }
+                    system("cls");
+                }
+            }
+        }
+        else if((opt == 65)||(opt == 97)){
+            for (qtd=0;qtd<10;qtd++){
+                if ((!character.armors[qtd].equiped)&&(character.armors[qtd].owned)){
+                    cout << "Voce nao esta usando " << character.armors[qtd].name << endl;
+                    cout << "Nos podemos lhe pagar " << ceil(character.armors[qtd].price*0.9) << endl;
+                    cout << "Deseja vender[S/N]?" << endl;
+                    cin >> opt;
+                    if ((opt == 83)||(opt == 115)){
+                        character.money = character.money + ceil(character.armors[qtd].price*0.9);
+                        character.armors[qtd].amount = 0;
+                    }
+                    system("cls");
+                }
+            }
+        }
+    }*/
     else if(opt ==2){
-        cout << 
+        cout << "Estamos com o estoque esgotado. Volte novamente mais tarde" << endl;
     }
     else if(opt == 3){
         return character;
@@ -727,15 +805,15 @@ int main(){
     int aux, aux1;
     personagem perso;
     item basic_dagger, basic_bow;
-    perso.lvl = 2;
-    perso.sweapon.name = "Short Bow";
-    perso.wweapon.name = "Iron Dagger";
-    perso.sweapon.price = 2500;
-    perso.wweapon.price = 200;
-    perso.sweapon.bonus = 0;
-    perso.wweapon.bonus = 0;
-    perso.sweapon.equiped = true;
-    perso.wweapon.equiped = true;
+    perso.lvl = 3;
+    perso.weapons[0].name = "Short Bow";
+    perso.weapons[1].name = "Iron Dagger";
+    perso.weapons[0].price = 2500;
+    perso.weapons[1].price = 200;
+    perso.weapons[0].bonus = 0;
+    perso.weapons[1].bonus = 0;
+    perso.weapons[0].equiped = true;
+    perso.weapons[1].equiped = true;
     perso.money = 0;
     perso.upgrades = perso.lvl*10;
     perso.xp = 0;
@@ -757,7 +835,7 @@ int main(){
     cout << "Before we start, what should your character be known as?" << endl;
     cin >> perso.name;
     system("cls");
-    cout << "Now that you gave your character a name, you need to build him up" << endl;
+    cout << "Now that you gave your character a name, you need to build it up" << endl;
     system("pause");
     while (perso.upgrades>0){
         system("cls");
@@ -844,7 +922,7 @@ int main(){
         }
         else if ((aux==4)&&(perso.lvl>2)){
             system("cls");
-            perso = store(perso) << endl;
+            perso = store(perso);
             system("pause");
         }
         else if ((aux==5)&&(perso.lvl>2)){
