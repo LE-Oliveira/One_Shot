@@ -4,20 +4,20 @@
 
 class item{
     public:
-        string name;
+        std::string name;
         int price, amount = 0;
 };
 
 class weapon{
     public:
-        string name;
+        std::string name;
         int bonus, price, amount;
         bool equiped, owned;
 };
 
 class armour{
     public:
-        string name;
+        std::string name;
         int bonus, price, amount;
         bool equiped, owned;
 };

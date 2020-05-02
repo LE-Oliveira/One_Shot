@@ -32,6 +32,9 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="One_shot_code.cpp" />
+		<Unit filename="classes.h" />
+		<Unit filename="creatures.h" />
+		<Unit filename="funcoes.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

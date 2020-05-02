@@ -1,15 +1,12 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
-//#include "classes.cpp"
-//#include "funcoes.cpp"
+#include "classes.h"
+#include "funcoes.h"
 #include <time.h>
 #include <math.h>
 
 using namespace std;
-
-
-
 
 int main(){
     int aux, aux1;
