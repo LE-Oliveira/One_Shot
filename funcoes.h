@@ -1,11 +1,36 @@
-#include <cstdlib>
-#include <iostream>
-#include <string>
 #include "classes.h"
 #include <time.h>
 #include <math.h>
 
 using namespace std;
+
+creature create_wolf(){
+    creature wolf;
+    srand(time(NULL));
+    wolf.hp = rand() % 8 + 2 +rand() % 8;
+    wolf.atk = rand () % 4 + 2;
+    wolf.def = rand () % 3 + 2;
+    wolf.dex = rand () % 7 + 2;
+    wolf.xp = wolf.hp + wolf.dex*5 + wolf.atk*4 + wolf.def*3;
+}
+
+creature create_goblin(){
+    creature goblin;
+    goblin.hp = rand() % 6 + 1 + rand() % 6;
+    goblin.atk = rand () % 3 + 1;
+    goblin.def = rand () % 2 + 1;
+    goblin.dex = rand () % 4 + 1;
+    goblin.xp = goblin.hp + goblin.dex*5 + goblin.atk*4 + goblin.def*3;
+}
+
+creature create_chitine(){
+    creature chitine; 
+    chitine.hp = rand() % 6 + 4 +rand() % 6 + rand() % 6 + rand() % 6;
+    chitine.atk = rand () % 4 + 2;
+    chitine.def = rand () % 3 + 2;
+    chitine.dex = rand () % 7 + 2;
+    chitine.xp = chitine.hp + chitine.dex*5 + chitine.atk*4 + chitine.def*3;
+}
 
 personagem up_stat(personagem character){
     system("cls");
@@ -105,6 +130,14 @@ personagem up_stat(personagem character){
     return character;
 }
 
+void battle_menu(){
+    cout << "It is your turn" << endl;
+    cout << "What you want to do?" <<endl;
+    cout << "1 - Hit him with a knife" << endl;
+    cout << "2 - Throw an arrow on him" << endl;
+    cout << "3 - Run away" << endl;
+}
+
 personagem battle(personagem character){
     system("cls");
     bool turn = false;
@@ -115,23 +148,14 @@ personagem battle(personagem character){
     if (being==1){
         cout << "You find a wolf" << endl;
         system("pause");
-        creature wolf;
-        wolf.hp=7;
-        wolf.atk=4;
-        wolf.xp=50;
-        wolf.dex=5;
-        wolf.def=2;
+        creature wolf = create_wolf();
         if (character.dex>wolf.dex){
             turn = true;
         }
         while ((wolf.hp>0)&&(character.hp>0)){
             if(turn){
                 system("cls");
-                cout << "It is your turn" << endl;
-                cout << "What you want to do?" <<endl;
-                cout << "1 - Hit him with a knife" << endl;
-                cout << "2 - Throw an arrow on him" << endl;
-                cout << "3 - Run away" << endl;
+                battle_menu();
                 damage = character.atk - wolf.def;
                 if ((damage<1)&&(damage>-10)){
                     damage = 1;
@@ -275,23 +299,14 @@ personagem battle(personagem character){
     else if (being==2){
         cout << "You find a goblin" << endl;
         system("pause");
-        creature goblin;
-        goblin.hp=5;
-        goblin.atk=3;
-        goblin.xp=25;
-        goblin.dex=2;
-        goblin.def=0;
+        creature goblin = create_goblin();
         if (character.dex>goblin.dex){
             turn = true;
         }
         while ((goblin.hp>0)&&(character.hp>0)){
             if(turn){
                 system("cls");
-                cout << "It is your turn" << endl;
-                cout << "What you want to do?" <<endl;
-                cout << "1 - Hit him with a knife" << endl;
-                cout << "2 - Throw an arrow on him" << endl;
-                cout << "3 - Run away" << endl;
+                battle_menu();
                 damage = character.atk - goblin.def;
                 if ((damage<1)&&(damage>-10)){
                     damage = 1;
@@ -424,23 +439,14 @@ personagem battle(personagem character){
     else if (being ==3){
         cout << "You find a chitine" << endl;
         system("pause");
-        creature chitine;
-        chitine.hp=15;
-        chitine.atk=4;
-        chitine.xp=150;
-        chitine.dex=3;
-        chitine.def=1;
+        creature chitine = create_chitine();
         if (character.dex>chitine.dex){
             turn = true;
         }
          while ((chitine.hp>0)&&(character.hp>0)){
             if(turn){
                 system("cls");
-                cout << "It is your turn" << endl;
-                cout << "What you want to do?" <<endl;
-                cout << "1 - Hit him with a knife" << endl;
-                cout << "2 - Throw an arrow on him" << endl;
-                cout << "3 - Run away" << endl;
+                battle_menu();
                 damage = character.atk - chitine.def;
                 if ((damage<1)&&(damage>-10)){
                     damage = 1;
@@ -593,7 +599,6 @@ personagem battle(personagem character){
             cout << "Oh, the chitine was too strong for you" << endl;
             cout << "Better luck next time" << endl;
         }
-
         system("pause");
 
     }
@@ -610,6 +615,9 @@ personagem battle(personagem character){
 
 void inventory(personagem character){
     int aux, i = 0;
+    for(int j=0;j<50;j++){
+        character.item[j].amount = 0;
+    }
     system("cls");
     cout << "Inventory Menu" << endl;
     cout << "1 - See Battle Items" << endl;

@@ -5,7 +5,7 @@
 class item{
     public:
         std::string name;
-        int price, amount = 0;
+        int price, amount;
 };
 
 class weapon{

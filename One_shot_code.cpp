@@ -1,10 +1,4 @@
-#include <cstdlib>
-#include <iostream>
-#include <string>
-#include "classes.h"
 #include "funcoes.h"
-#include <time.h>
-#include <math.h>
 
 using namespace std;
 
@@ -29,7 +23,6 @@ int main(){
     perso.dex = 1;
     perso.luck = 1;
     perso.vit = 1;
-    perso.hp = 10 + 2*perso.vit;
     cout << "Welcome to this chaotic world, where villages are wiped out by monsters and heroes are lacking" << endl;
     system("pause");
     system("cls");
@@ -73,11 +66,11 @@ int main(){
             break;
             case 5:
                 perso.vit++;
-                perso.hp = perso.hp +2;
                 perso.upgrades--;
             break;
         }
     }
+    perso.hp = 10 + 2*perso.vit;
     system("cls");
     cout << "Name: " << perso.name << endl;
     cout << "Constitution: " << perso.def << endl;
