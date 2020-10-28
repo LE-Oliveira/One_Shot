@@ -1,9 +1,12 @@
 #include "funcoes.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 
 int main(){
-    int aux, aux1;
+    int aux = 1;
+    char opt;
     personagem perso;
     item basic_dagger, basic_bow;
     perso.lvl = 3;
@@ -24,21 +27,21 @@ int main(){
     perso.luck = 1;
     perso.vit = 1;
     cout << "Welcome to this chaotic world, where villages are wiped out by monsters and heroes are lacking" << endl;
-    system("pause");
-    system("cls");
+    getchar();
+    system("clear");
     cout << "You'll start your adventure at Brengash Village" << endl;
-    system("pause");
-    system("cls");
+    getchar();
+    system("clear");
     cout << "Will you be able to change this world's destiny and defeat the Abysmal Lord?" << endl;
-    system("pause");
-    system("cls");
+    system("sleep 2");
+    system("clear");
     cout << "Before we start, what should your character be known as?" << endl;
-    cin >> perso.name;
-    system("cls");
+    scanf("%s", perso.name);
+    system("clear");
     cout << "Now that you gave your character a name, you need to build it up" << endl;
-    system("pause");
+    system("sleep 2");
     while (perso.upgrades>0){
-        system("cls");
+        system("clear");
         cout << "You still have " << perso.upgrades << " available" << endl;
         cout << "Please distribute them" << endl;
         cout << "1 - Constitution: " << perso.def << endl;
@@ -46,54 +49,51 @@ int main(){
         cout << "3 - Dexterity: " << perso.dex << endl;
         cout << "4 - Luck: " << perso.luck << endl;
         cout << "5 - Vitality: " << perso.vit << endl;
-        cin >> aux;
-        switch (aux){
-            case 1:
-                perso.def++;
-                perso.upgrades--;
-            break;
-            case 2:
-                perso.atk++;
-                perso.upgrades--;
-            break;
-            case 3:
-                perso.dex++;
-                perso.upgrades--;
-            break;
-            case 4:
-                perso.luck++;
-                perso.upgrades--;
-            break;
-            case 5:
-                perso.vit++;
-                perso.upgrades--;
-            break;
+        scanf("%c", &opt);
+        if(opt == '1'){
+            perso.def++;
+            perso.upgrades--;
+        }
+        else if(opt == '2'){
+            perso.atk++;
+            perso.upgrades--;
+        }
+        else if(opt == '3'){
+            perso.dex++;
+            perso.upgrades--;
+        }
+        else if(opt == '4'){
+            perso.luck++;
+            perso.upgrades--;
+        }
+        else if(opt == '5'){
+            perso.vit++;
+            perso.upgrades--;
         }
     }
     perso.hp = 10 + 2*perso.vit;
-    system("cls");
+    system("clear");
     cout << "Name: " << perso.name << endl;
     cout << "Constitution: " << perso.def << endl;
     cout << "Strength: " << perso.atk << endl;
     cout << "Dexterity: " << perso.dex << endl;
     cout << "Luck: " << perso.luck << endl;
     cout << "Vitality: " << perso.vit << endl;
-    system("pause");
-    aux1 = 0;
-    while (aux1==0){
-        system("cls");
+    getchar();
+    while((aux>0)&&(aux<5)){
+        system("clear");
         cout << "Menu" << endl;
         cout << "What do you want to do?" << endl;
         cout << "1 - Battle" << endl;
         cout << "2 - See points" << endl;
-        if  ( perso.lvl==1){
+        if(perso.lvl==1){
             cout << "3 - Escape the game" << endl;
         }
-        else if (perso.lvl==2){
+        else if(perso.lvl==2){
             cout << "3 - Access inventory" << endl;
             cout << "4 - Escape the game" << endl;
         }
-        else if (perso.lvl>2){
+        else if(perso.lvl>2){
             cout << "3 - Access inventory" << endl;
             cout << "4 - Go to the store" << endl;
             cout << "5 - Escape the game" << endl;
@@ -106,27 +106,27 @@ int main(){
             perso = up_stat(perso);
         }
         else if ((aux==3)&&(perso.lvl==1)){
-            system("cls");
+            system("clear");
             cout << "Have a nice day";
             break;
         }
         else if ((aux==3)&&(perso.lvl>1)){
-            system("cls");
+            system("clear");
             inventory(perso);
-            system("pause");
+            getchar();
         }
         else if ((aux==4)&&(perso.lvl==2)){
-            system("cls");
+            system("clear");
             cout << "Have a nice day";
             break;
         }
         else if ((aux==4)&&(perso.lvl>2)){
-            system("cls");
+            system("clear");
             perso = store(perso);
-            system("pause");
+            getchar();
         }
         else if ((aux==5)&&(perso.lvl>2)){
-            system("cls");
+            system("clear");
             cout << "Have a nice day";
             break;
         }

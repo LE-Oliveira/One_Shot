@@ -12,6 +12,7 @@ creature create_wolf(){
     wolf.def = rand () % 3 + 2;
     wolf.dex = rand () % 7 + 2;
     wolf.xp = wolf.hp + wolf.dex*5 + wolf.atk*4 + wolf.def*3;
+    return wolf;
 }
 
 creature create_goblin(){
@@ -21,6 +22,7 @@ creature create_goblin(){
     goblin.def = rand () % 2 + 1;
     goblin.dex = rand () % 4 + 1;
     goblin.xp = goblin.hp + goblin.dex*5 + goblin.atk*4 + goblin.def*3;
+    return goblin;
 }
 
 creature create_chitine(){
@@ -30,12 +32,13 @@ creature create_chitine(){
     chitine.def = rand () % 3 + 2;
     chitine.dex = rand () % 7 + 2;
     chitine.xp = chitine.hp + chitine.dex*5 + chitine.atk*4 + chitine.def*3;
+    return chitine;
 }
 
 personagem up_stat(personagem character){
-    system("cls");
+    system("clear");
     int aux;
-    string answer;
+    string answer, opt;
     cout << "Points Menu" <<endl;
     cout << "1 - See profile" << endl;
     cout << "2 - Upgrade stats" << endl;
@@ -44,7 +47,7 @@ personagem up_stat(personagem character){
     cout << "5 - Return to previous menu" << endl;
     cin >> aux;
     if (aux==1){
-        system("cls");
+        system("clear");
         cout << "Level: " << character.lvl << endl;
         cout << "Name: " << character.name << endl;
         cout << "Money: " << character.money << endl;
@@ -53,13 +56,12 @@ personagem up_stat(personagem character){
         cout << "Dexterity: " << character.dex << endl;
         cout << "Luck: " << character.luck << endl;
         cout << "Vitality: " << character.vit << endl;
-
-        system("pause");
+        system("sleep 6");
     }
     else if (aux==2){
         if (character.upgrades>0){
             while (character.upgrades>0){
-                system("cls");
+                system("clear");
                 cout << "You still have " << character.upgrades << " available" << endl;
                 cout << "Please distribute them" << endl;
                 cout << "1 - Constitution: " << character.def << endl;
@@ -67,36 +69,37 @@ personagem up_stat(personagem character){
                 cout << "3 - Dexterity: " << character.dex << endl;
                 cout << "4 - Luck: " << character.luck << endl;
                 cout << "5 - Vitality: " << character.vit << endl;
-                cin >> aux;
-                switch (aux){
-                    case 1:
-                        character.def++;
-                        character.upgrades--;
-                    break;
-                    case 2:
-                        character.atk++;
-                        character.upgrades--;
-                    break;
-                    case 3:
-                        character.dex++;
-                        character.upgrades--;
-                    break;
-                    case 4:
-                        character.luck++;
-                        character.upgrades--;
-                    break;
-                    case 5:
-                        character.vit++;
-                        character.hp = character.hp +2;
-                        character.upgrades--;
-                    break;
+                opt = getchar();
+                if(opt == "1"){
+                    character.def++;
+                    character.upgrades--;
+                }
+                else if(opt == "2"){
+                    character.atk++;
+                    character.upgrades--;
+                }
+                else if(opt == "3"){
+                    character.dex++;
+                    character.upgrades--;
+                }
+                else if(opt == "4"){
+                    character.luck++;
+                    character.upgrades--;
+                }
+                else if(opt == "5"){
+                    character.vit++;
+                    character.upgrades--;
+                }
+                else{
+                    cout << "Valor inválido" << endl;
+                    system("sleep 2");
                 }
             }
         }
         else{
-            system("cls");
+            system("clear");
             cout << "You don't have any remaining points" << endl;
-            system("pause");
+            system("sleep 2");
         }
     }
     else if (aux==3){
@@ -111,21 +114,21 @@ personagem up_stat(personagem character){
                 character.luck = 1;
                 character.vit = 1;
                 character.money = character.money - 100;
-                system("cls");
+                system("clear");
                 cout << "All stats were reset" <<endl;
-                system("pause");
+                system("sleep 2");
             }
             else{
-                system("cls");
+                system("clear");
                 cout << "You don't have enough money. Defeat more enemies to get more money" << endl;
             }
         }
     }
     else if (aux==4){
-        system("cls");
+        system("clear");
         cout << "You have " << character.xp << " experience points" << endl;
         cout << "For the next lvl you need " << (character.lvl*10+pow(5,character.lvl))*10 << " experience points" << endl;
-        system("pause");
+        system("sleep 3");
     }
     return character;
 }
@@ -139,7 +142,7 @@ void battle_menu(){
 }
 
 personagem battle(personagem character){
-    system("cls");
+    system("clear");
     bool turn = false;
     int being, attack, damage, hit, qtd, i;
     string aux;
@@ -147,14 +150,14 @@ personagem battle(personagem character){
     being = rand() % (character.lvl + 1) + 1;
     if (being==1){
         cout << "You find a wolf" << endl;
-        system("pause");
+        system("sleep 2");
         creature wolf = create_wolf();
         if (character.dex>wolf.dex){
             turn = true;
         }
         while ((wolf.hp>0)&&(character.hp>0)){
             if(turn){
-                system("cls");
+                system("clear");
                 battle_menu();
                 damage = character.atk - wolf.def;
                 if ((damage<1)&&(damage>-10)){
@@ -164,7 +167,7 @@ personagem battle(personagem character){
                     damage = 0;
                 }
                 cin >> attack;
-                system("cls");
+                system("clear");
                 hit = rand() % 20 +1;
                 if (attack==1){
                     turn = false;
@@ -215,8 +218,8 @@ personagem battle(personagem character){
             }
             else{
                 cout << "It is the wolf's turn" << endl;
-                system("pause");
-                system("cls");
+                system("sleep 2");
+                system("clear");
                 srand(time(NULL));
                 attack = rand() % 2 +1;
                 damage = wolf.atk - character.def;
@@ -268,8 +271,8 @@ personagem battle(personagem character){
             }
             cout << character.name <<"'s hp: " << character.hp << endl;
             cout << "Wolf's hp: " << wolf.hp << endl;
-            system("pause");
-            system("cls");
+            system("sleep 2");
+            system("clear");
         }
         if (wolf.hp<=0){
             cout << "Congratulations, you just defeated a wolf" << endl;
@@ -294,18 +297,18 @@ personagem battle(personagem character){
             cout << "Oh, the wolf was too strong for you" << endl;
             cout << "Better luck next time" << endl;
         }
-        system("pause");
+        system("sleep 2");
     }
     else if (being==2){
         cout << "You find a goblin" << endl;
-        system("pause");
+        system("sleep 2");
         creature goblin = create_goblin();
         if (character.dex>goblin.dex){
             turn = true;
         }
         while ((goblin.hp>0)&&(character.hp>0)){
             if(turn){
-                system("cls");
+                system("clear");
                 battle_menu();
                 damage = character.atk - goblin.def;
                 if ((damage<1)&&(damage>-10)){
@@ -315,7 +318,7 @@ personagem battle(personagem character){
                     damage = 0;
                 }
                 cin >> attack;
-                system("cls");
+                system("clear");
                 hit = rand() % 20 +1;
                 if (attack==1){
                     turn = false;
@@ -366,8 +369,8 @@ personagem battle(personagem character){
             }
             else{
                 cout << "It is the goblin's turn" << endl;
-                system("pause");
-                system("cls");
+                system("sleep 2");
+                system("clear");
                 srand(time(NULL));
                 attack = rand() % 2 +1;
                 damage = goblin.atk - character.def;
@@ -419,8 +422,8 @@ personagem battle(personagem character){
             }
             cout << character.name <<"'s hp: " << character.hp << endl;
             cout << "Goblin's hp: " << goblin.hp << endl;
-            system("pause");
-            system("cls");
+            system("sleep 2");
+            system("clear");
         }
         if (goblin.hp<=0){
             cout << "Congratulations, you just defeated the goblin" << endl;
@@ -434,18 +437,18 @@ personagem battle(personagem character){
             cout << "Oh, the goblin was too strong for you" << endl;
             cout << "Better luck next time" << endl;
         }
-        system("pause");
+        system("sleep 2");
     }
     else if (being ==3){
         cout << "You find a chitine" << endl;
-        system("pause");
+        system("sleep 2");
         creature chitine = create_chitine();
         if (character.dex>chitine.dex){
             turn = true;
         }
-         while ((chitine.hp>0)&&(character.hp>0)){
+        while ((chitine.hp>0)&&(character.hp>0)){
             if(turn){
-                system("cls");
+                system("clear");
                 battle_menu();
                 damage = character.atk - chitine.def;
                 if ((damage<1)&&(damage>-10)){
@@ -455,7 +458,8 @@ personagem battle(personagem character){
                     damage = 0;
                 }
                 cin >> attack;
-                system("cls");
+                system("clear");
+                srand(time(NULL));
                 hit = rand() % 20 +1;
                 if (attack==1){
                     turn = false;
@@ -506,8 +510,8 @@ personagem battle(personagem character){
             }
             else{
                 cout << "It is the chitine's turn" << endl;
-                system("pause");
-                system("cls");
+                system("sleep 2");
+                system("clear");
                 srand(time(NULL));
                 attack = rand() % 2 +1;
                 damage = chitine.atk - character.def;
@@ -563,8 +567,8 @@ personagem battle(personagem character){
             }
             cout << character.name <<"'s hp: " << character.hp << endl;
             cout << "Chitine's hp: " << chitine.hp << endl;
-            system("pause");
-            system("cls");
+            system("sleep 2");
+            system("clear");
         }
         if (chitine.hp<=0){
             cout << "Congratulations, you just defeated the chitine" << endl;
@@ -599,16 +603,16 @@ personagem battle(personagem character){
             cout << "Oh, the chitine was too strong for you" << endl;
             cout << "Better luck next time" << endl;
         }
-        system("pause");
+        system("sleep 2");
 
     }
     character.hp = 10 + 2*character.vit;
     if (character.xp >= (character.lvl*10+pow(5,character.lvl))*10){
         character.lvl++;
         character.upgrades = character.upgrades + 10;
-        system("cls");
+        system("clear");
         cout << "Congrats, " << character.name << " upgraded its level to " << character.lvl << endl;
-        system ("pause");
+        system("sleep 2");
     }
     return character;
 }
@@ -616,15 +620,15 @@ personagem battle(personagem character){
 void inventory(personagem character){
     int aux, i = 0;
     for(int j=0;j<50;j++){
-        character.item[j].amount = 0;
+        character.items[j].amount = 0;
     }
-    system("cls");
+    system("clear");
     cout << "Inventory Menu" << endl;
     cout << "1 - See Battle Items" << endl;
     cout << "2 - See Other Items" << endl;
     cout << "3 - Go back to previous Menu" << endl;
     cin >> aux;
-    system("cls");
+    system("clear");
     if (aux == 1){
         if (character.weapons[0].equiped){
             cout << "Your strong weapon is " << character.weapons[0].name << " which gives + " << character.weapons[0].bonus << " in the attacks" << endl;
@@ -689,7 +693,7 @@ personagem store(personagem character){
     cout << "2 - Comprar Itens" << endl;
     cout << "3 - Voltar ao Menu Principal" <<endl;
     cin >> opt ;
-    system("cls");
+    system("clear");
     if(opt == 1){
        cout << "Em manutencao, aguarde proximas atualizacoes" << endl; 
     }
@@ -706,14 +710,14 @@ personagem store(personagem character){
         }
         cout << "Deseja vender itens[I] ou armas[W] ou armaduras[A]?" << endl;
         cin >> opt; //tá dando bug isso aqui
-        system("cls");
+        system("clear");
         if ((opt == 73)||(opt == 105)){
             for (qtd=0;qtd<50;qtd++){
                 if (character.items[qtd].amount>0){
                     cout << character.items[qtd].name << ": " << character.items[qtd].price << endl;
                     cout << "Voce deseja vender todos[T], alguns[A] ou nenhum[N]?" << endl;
                     cin >> opt;
-                    system("cls");
+                    system("clear");
                     if ((opt == 84)||(opt == 116)){
                         character.items[qtd].amount = 0;
                         character.money = character.money + character.items[qtd].price*character.items[qtd].amount;
@@ -722,14 +726,14 @@ personagem store(personagem character){
                         cout << "Quantos?" << endl;
                         cin >> opt;
                         while (opt>character.items[qtd].amount){
-                            system("cls");
+                            system("clear");
                             cout << "Por favor, insira um valor válido" << endl;
                             cin >> opt;
                         }
                         character.items[qtd].amount = character.items[qtd].amount - opt;
                         character.money = character.money + character.items[qtd].amount*character.items[qtd].price;
                     }
-                    system("cls");
+                    system("clear");
                 }
 
             }
@@ -745,7 +749,7 @@ personagem store(personagem character){
                         character.money = character.money + ceil(character.weapons[qtd].price*0.9);
                         character.weapons[qtd].amount = 0;
                     }
-                    system("cls");
+                    system("clear");
                 }
             }
         }
@@ -760,7 +764,7 @@ personagem store(personagem character){
                         character.money = character.money + ceil(character.armors[qtd].price*0.9);
                         character.armors[qtd].amount = 0;
                     }
-                    system("cls");
+                    system("clear");
                 }
             }
         }
