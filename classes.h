@@ -12,7 +12,7 @@ class weapon{
     public:
         std::string name;
         int bonus, price, amount;
-        bool equiped, owned;
+        bool equiped = false, owned = false;
 };
 
 class armour{
@@ -33,5 +33,5 @@ class personagem{
 
 class creature{
     public:
-        int hp, atk, xp, dex, def;
+        int hp, atk, xp, dex, def, luck;
 };

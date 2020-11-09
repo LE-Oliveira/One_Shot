@@ -9,7 +9,7 @@ int main(){
     char opt;
     personagem perso;
     item basic_dagger, basic_bow;
-    perso.lvl = 3;
+    perso.lvl = 1;
     perso.weapons[0].name = "Short Bow";
     perso.weapons[1].name = "Iron Dagger";
     perso.weapons[0].price = 2500;
@@ -26,11 +26,20 @@ int main(){
     perso.dex = 1;
     perso.luck = 1;
     perso.vit = 1;
+    for(int j=0;j<50;j++){
+        perso.items[j].amount = 0;
+    }
+    /*perso.items[0].amount = 10;
+    perso.items[1].amount = 1;
+    perso.items[0].name = "wolf claw";
+    perso.items[0].price = 50;
+    perso.items[1].name = "wolf fur";
+    perso.items[1].price = 10;*/
     cout << "Welcome to this chaotic world, where villages are wiped out by monsters and heroes are lacking" << endl;
-    getchar();
+    system("sleep 2");
     system("clear");
     cout << "You'll start your adventure at Brengash Village" << endl;
-    getchar();
+    system("sleep 2");
     system("clear");
     cout << "Will you be able to change this world's destiny and defeat the Abysmal Lord?" << endl;
     system("sleep 2");
@@ -79,24 +88,25 @@ int main(){
     cout << "Dexterity: " << perso.dex << endl;
     cout << "Luck: " << perso.luck << endl;
     cout << "Vitality: " << perso.vit << endl;
-    getchar();
-    while((aux>0)&&(aux<5)){
+    system("sleep 2");
+    while((aux>0)&&(aux<7)){
         system("clear");
         cout << "Menu" << endl;
         cout << "What do you want to do?" << endl;
         cout << "1 - Battle" << endl;
         cout << "2 - See points" << endl;
+        cout << "3 - Rest and heal" << endl;
         if(perso.lvl==1){
-            cout << "3 - Escape the game" << endl;
-        }
-        else if(perso.lvl==2){
-            cout << "3 - Access inventory" << endl;
             cout << "4 - Escape the game" << endl;
         }
-        else if(perso.lvl>2){
-            cout << "3 - Access inventory" << endl;
-            cout << "4 - Go to the store" << endl;
+        else if(perso.lvl==2){
+            cout << "4 - Access inventory" << endl;
             cout << "5 - Escape the game" << endl;
+        }
+        else if(perso.lvl>2){
+            cout << "4 - Access inventory" << endl;
+            cout << "5 - Go to the store" << endl;
+            cout << "6 - Escape the game" << endl;
         }
         cin >> aux;
         if (aux==1){
@@ -105,29 +115,28 @@ int main(){
         else if (aux==2){
             perso = up_stat(perso);
         }
-        else if ((aux==3)&&(perso.lvl==1)){
+        else if (aux==3){
+            perso = heal(perso);
+        }
+        else if ((aux==4)&&(perso.lvl==1)){
             system("clear");
-            cout << "Have a nice day";
+            cout << "Have a nice day\n";
             break;
         }
-        else if ((aux==3)&&(perso.lvl>1)){
-            system("clear");
+        else if ((aux==4)&&(perso.lvl>1)){
             inventory(perso);
-            getchar();
         }
-        else if ((aux==4)&&(perso.lvl==2)){
+        else if ((aux==5)&&(perso.lvl==2)){
             system("clear");
-            cout << "Have a nice day";
+            cout << "Have a nice day\n";
             break;
-        }
-        else if ((aux==4)&&(perso.lvl>2)){
-            system("clear");
-            perso = store(perso);
-            getchar();
         }
         else if ((aux==5)&&(perso.lvl>2)){
+            perso = store(perso);
+        }
+        else if ((aux==6)&&(perso.lvl>2)){
             system("clear");
-            cout << "Have a nice day";
+            cout << "Have a nice day\n";
             break;
         }
     }
