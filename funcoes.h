@@ -38,6 +38,72 @@ creature create_chitine(){
     return chitine;
 }
 
+weapon createLongBow(){
+    weapon long_bow;
+    long_bow.name = "Arco Longo";
+    long_bow.bonus = 2;
+    long_bow.price = 5000;
+    long_bow.equiped = false;
+    return long_bow;
+}
+
+weapon createShortSword(){
+    weapon short_sword;
+    short_sword.name = "Espada Curta";
+    short_sword.bonus = 2;
+    short_sword.price = 1000;
+    short_sword.equiped = false;
+    return short_sword;
+}
+
+weapon createSpear(){
+    weapon spear;
+    spear.name = "Lança";
+    spear.bonus = 2;
+    spear.price = 100;
+    spear.equiped = false;
+    return spear;
+}
+
+weapon createBattleAxe(){
+    weapon battle_axe;
+    battle_axe.name = "Machado de Batalha";
+    battle_axe.bonus = 2;
+    battle_axe.price = 3000;
+    battle_axe.equiped = false;
+    return battle_axe;
+}
+
+weapon createScythe(){
+    weapon scythe;
+    scythe.name = "Foice";
+    scythe.bonus = 3;
+    scythe.price = 5000;
+    scythe.equiped = false;
+    return scythe;
+}
+
+personagem inicia(personagem character){
+    character.lvl = 1;
+    character.weapons[0].name = "Short Bow";
+    character.weapons[1].name = "Iron Dagger";
+    character.weapons[0].price = 2500;
+    character.weapons[1].price = 200;
+    character.weapons[0].bonus = 0;
+    character.weapons[1].bonus = 0;
+    character.weapons[0].equiped = true;
+    character.weapons[1].equiped = true;
+    character.money = 0;
+    character.upgrades = character.lvl*10;
+    character.xp = 0;
+    character.atk = 1;
+    character.def = 1;
+    character.dex = 1;
+    character.luck = 1;
+    character.vit = 1;
+    return character;
+}
+
 personagem up_stat(personagem character){
     system("clear");
     int aux;
@@ -116,6 +182,7 @@ personagem up_stat(personagem character){
                 character.dex = 1;
                 character.luck = 1;
                 character.vit = 1;
+                character.hp = 12;
                 character.money = character.money - 100;
                 system("clear");
                 cout << "All stats were reset" <<endl;
@@ -124,6 +191,7 @@ personagem up_stat(personagem character){
             else{
                 system("clear");
                 cout << "You don't have enough money. Defeat more enemies to get more money" << endl;
+                system("sleep 2");
             }
         }
     }
@@ -665,39 +733,12 @@ personagem store(personagem character){
     system("clear");
     int i, id, qtd, aux1 = 0; int aux2 = 0; int aux3 = 0;
     char opt;
-    /*weapon long_bow, short_sword, spear, battle_axe;
-    long_bow.name = "Arco Longo";
-    long_bow.bonus = 2;
-    long_bow.price = 5000;
-    long_bow.equiped = false;
-    short_sword.name = "Espada Curta";
-    short_sword.bonus = 2;
-    short_sword.price = 1000;
-    short_sword.equiped = false;
-    spear.name = "Lança";
-    spear.bonus = 2;
-    spear.price = 100;
-    spear.equiped = false;
-    battle_axe.name = "Machado de Batalha";
-    battle_axe.bonus = 2;
-    battle_axe.price = 3000;
-    battle_axe.equiped = false;
-    if (character.lvl == 4){
-        weapon scythe;
-        scythe.name = "Foice";
-        scythe.bonus = 3;
-        scythe.price = 5000;
-        scythe.equiped = false;
-    }*/
     cout << "Seja bem-vinde a loja" << endl;
     cout << "1 - Vender Itens" << endl;
     cout << "2 - Comprar Itens" << endl;
     cout << "3 - Voltar ao Menu Principal" <<endl;
     cin >> opt;
     system("clear");
-    /*if(opt == '1'){
-       cout << "Em manutencao, aguarde proximas atualizacoes" << endl; 
-    }*/
     if(opt == '1'){
         for (int k=0;k<10;k++){
             if ((character.weapons[k].amount>0)&&(character.weapons[k].equiped = false)){
@@ -825,9 +866,16 @@ personagem store(personagem character){
             }
         }
     }
-    else if(opt ==2){
+    else if(opt == '2'){
         cout << "Estamos com o estoque esgotado. Volte novamente mais tarde" << endl;
     }
+    /*
+    else if(opt == '2'){
+        cout << "We have several options ready for you" << endl;
+        cout << "Would you like to see armours[A] or weapons[W]?" << endl;
+        cin >> opt;
+    }
+    */
     else if(opt == 3){
         return character;
     }
@@ -835,9 +883,9 @@ personagem store(personagem character){
     return character;
 }
 
-personagem heal(personagem character){
+personagem heal(personagem character, bool went){
     char aux;
-    int opt, menor;
+    int opt, menor, chance;
     system("clear");
     if (character.hp < 10 + 2*character.vit){
         cout << character.name << "'s hp: " << character.hp << "/" << 10+2*character.vit << endl;
@@ -858,12 +906,15 @@ personagem heal(personagem character){
             cout << "3 - Complete: costs 17 coins and heals 100% of life" << endl;
             cout << "4 - Never mind. I've changed my mind" << endl;
             cin >> opt;
+            if(went) chance = 0;
+            else{
+                srand(time(NULL));
+                chance = rand() % (20) + 1 + character.luck;
+            }
             if(opt == 1){
-                if(character.money >= 5){
-                    if (character.hp + ceil(0.25 * (10 + 2 * character.vit)) > 10 + 2 * character.vit){
-                        menor = 10 + 2 * character.vit - character.hp;
-                    }
-                    else menor = ceil(0.25 * (10 + 2 * character.vit));
+                system("clear");
+                if(chance>19){
+                    cout << "You know what? Take a free trial. No fees for ya" << endl;
                     for(int time = 0; time < menor; time++){
                         system("clear");
                         character.hp++;
@@ -872,40 +923,86 @@ personagem heal(personagem character){
                         system("sleep 0.05");
                     }
                     cout << "After a rest in a bed you feel a bit better" << endl;
-                    character.money = character.money - 5;
+                }
+                else{
+                    if(character.money >= 5){
+                        if (character.hp + ceil(0.25 * (10 + 2 * character.vit)) > 10 + 2 * character.vit){
+                            menor = 10 + 2 * character.vit - character.hp;
+                        }
+                        else menor = ceil(0.25 * (10 + 2 * character.vit));
+                        for(int time = 0; time < menor; time++){
+                            system("clear");
+                            character.hp++;
+                            cout << character.name << "'s hp: " << character.hp << "/" << 10 + 2 * character.vit << endl;
+                            cout << "Resting" << endl;
+                            system("sleep 0.05");
+                        }
+                        cout << "After a rest in a bed you feel a bit better" << endl;
+                        character.money = character.money - 5;
+                    }
+                    else cout << "You don't have enough money. Sorry, we can do nothing for you" << endl;
+                    system("sleep 2");
                 }
             }
             else if(opt == 2){
-                if(character.money >= 9){
-                    if (character.hp + ceil(0.5 * (10 + 2 * character.vit)) > 10 + 2 * character.vit){
-                        menor = 10 + 2 * character.vit - character.hp;
-                    }
-                    else menor = ceil(0.5 * (10 + 2 * character.vit));
+                if(chance>19){
+                    cout << "You know what? Take a free trial. No fees for ya" << endl;
                     for(int time = 0; time < menor; time++){
                         system("clear");
                         character.hp++;
-                        cout << character.name << "'s hp: " << character.hp << "/" << 10 + 2 * character.vit << endl;
+                        cout << character.name << "'s hp: " << character.hp << "/" << menor << endl;
                         cout << "Resting" << endl;
                         system("sleep 0.05");
                     }
-                    cout << "After a rest in a confy bed you feel better" << endl;
-                    character.money = character.money - 9;
-                    character.hp = character.hp + ceil(0.5*(10 + 2*character.vit));
+                    cout << "After a rest in a bed you feel a bit better" << endl;
+                }
+                else{
+                    if(character.money >= 9){
+                        if (character.hp + ceil(0.5 * (10 + 2 * character.vit)) > 10 + 2 * character.vit){
+                            menor = 10 + 2 * character.vit - character.hp;
+                        }
+                        else menor = ceil(0.5 * (10 + 2 * character.vit));
+                        for(int time = 0; time < menor; time++){
+                            system("clear");
+                            character.hp++;
+                            cout << character.name << "'s hp: " << character.hp << "/" << 10 + 2 * character.vit << endl;
+                            cout << "Resting" << endl;
+                            system("sleep 0.05");
+                        }
+                        cout << "After a rest in a confy bed you feel better" << endl;
+                        character.money = character.money - 9;
+                        character.hp = character.hp + ceil(0.5*(10 + 2*character.vit));
+                    }
                 }
             }
             else if(opt == 3){
-                if(character.money >= 17){
-                    menor = 10 + 2 * character.vit - character.hp;
-                    for(int time = 0; time < menor; time++){
+                if(chance>19){
+                    cout << "You know what? Take a free trial. No fees for ya" << endl;
+                    for(int time = 0; time < (10+2*character.vit); time++){
                         system("clear");
                         character.hp++;
                         cout << character.name << "'s hp: " << character.hp << "/" << 10 + 2 * character.vit << endl;
                         cout << "Resting" << endl;
                         system("sleep 0.05");
                     }
-                    cout << "After a rest in a superbly confy bed you feel revigorated" << endl;
-                    character.money = character.money - 9;
-                    character.hp = 10 + 2*character.vit;
+                    cout << "After a rest in a bed you feel a bit better" << endl;
+                }
+                else{
+                    if(character.money >= 17){
+                        menor = 10 + 2 * character.vit - character.hp;
+                        for(int time = 0; time < menor; time++){
+                            system("clear");
+                            character.hp++;
+                            cout << character.name << "'s hp: " << character.hp << "/" << 10 + 2 * character.vit << endl;
+                            cout << "Resting" << endl;
+                            system("sleep 0.05");
+                        }
+                        cout << "After a rest in a superbly confy bed you feel revigorated" << endl;
+                        character.money = character.money - 9;
+                        character.hp = 10 + 2*character.vit;
+                    }
+                    else cout << "You don't have enough money. Sorry, we can do nothing for you" << endl;
+                    system("sleep 2");
                 }
             }
             else if(opt == 4){

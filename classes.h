@@ -28,7 +28,8 @@ class personagem{
         weapon weapons[10];
         armour armors[5];
         item items[50];
-        char name[20];
+        char name[20];  
+        personagem inicia(personagem perso);
 };
 
 class creature{

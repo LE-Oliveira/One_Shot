@@ -6,35 +6,10 @@ using namespace std;
 
 int main(){
     int aux = 1;
+    bool went = true;
     char opt;
-    personagem perso;
+    personagem perso = inicia(perso);
     item basic_dagger, basic_bow;
-    perso.lvl = 1;
-    perso.weapons[0].name = "Short Bow";
-    perso.weapons[1].name = "Iron Dagger";
-    perso.weapons[0].price = 2500;
-    perso.weapons[1].price = 200;
-    perso.weapons[0].bonus = 0;
-    perso.weapons[1].bonus = 0;
-    perso.weapons[0].equiped = true;
-    perso.weapons[1].equiped = true;
-    perso.money = 0;
-    perso.upgrades = perso.lvl*10;
-    perso.xp = 0;
-    perso.atk = 1;
-    perso.def = 1;
-    perso.dex = 1;
-    perso.luck = 1;
-    perso.vit = 1;
-    for(int j=0;j<50;j++){
-        perso.items[j].amount = 0;
-    }
-    /*perso.items[0].amount = 10;
-    perso.items[1].amount = 1;
-    perso.items[0].name = "wolf claw";
-    perso.items[0].price = 50;
-    perso.items[1].name = "wolf fur";
-    perso.items[1].price = 10;*/
     cout << "Welcome to this chaotic world, where villages are wiped out by monsters and heroes are lacking" << endl;
     system("sleep 2");
     system("clear");
@@ -95,46 +70,28 @@ int main(){
         cout << "What do you want to do?" << endl;
         cout << "1 - Battle" << endl;
         cout << "2 - See points" << endl;
-        cout << "3 - Rest and heal" << endl;
-        if(perso.lvl==1){
-            cout << "4 - Escape the game" << endl;
-        }
-        else if(perso.lvl==2){
-            cout << "4 - Access inventory" << endl;
-            cout << "5 - Escape the game" << endl;
-        }
-        else if(perso.lvl>2){
-            cout << "4 - Access inventory" << endl;
-            cout << "5 - Go to the store" << endl;
-            cout << "6 - Escape the game" << endl;
-        }
+        cout << "4 - Access inventory" << endl;
+        cout << "5 - Go to the store" << endl;
+        cout << "6 - Escape the game" << endl;
         cin >> aux;
         if (aux==1){
             perso = battle(perso);
+            went = false;
         }
         else if (aux==2){
             perso = up_stat(perso);
         }
         else if (aux==3){
-            perso = heal(perso);
+            perso = heal(perso, went);
+            went = true;
         }
-        else if ((aux==4)&&(perso.lvl==1)){
-            system("clear");
-            cout << "Have a nice day\n";
-            break;
-        }
-        else if ((aux==4)&&(perso.lvl>1)){
+        else if (aux==4){
             inventory(perso);
         }
-        else if ((aux==5)&&(perso.lvl==2)){
-            system("clear");
-            cout << "Have a nice day\n";
-            break;
-        }
-        else if ((aux==5)&&(perso.lvl>2)){
+        else if (aux==5){
             perso = store(perso);
         }
-        else if ((aux==6)&&(perso.lvl>2)){
+        else if (aux==6){
             system("clear");
             cout << "Have a nice day\n";
             break;
