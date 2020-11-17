@@ -38,12 +38,33 @@ creature create_chitine(){
     return chitine;
 }
 
+weapon createShortBow(){
+    weapon short_bow;
+    short_bow.name = "Short Bow";
+    short_bow.price = 2500;
+    short_bow.bonus = 0;
+    short_bow.equiped = true;
+    short_bow.owned = true;
+    return short_bow;
+}
+
+weapon createIronDagger(){
+    weapon iron_dagger;
+    iron_dagger.name = "Iron Dagger";
+    iron_dagger.price = 200;
+    iron_dagger.bonus = 0;
+    iron_dagger.equiped = true;
+    iron_dagger.owned = true;
+    return iron_dagger;
+}
+
 weapon createLongBow(){
     weapon long_bow;
     long_bow.name = "Arco Longo";
     long_bow.bonus = 2;
     long_bow.price = 5000;
     long_bow.equiped = false;
+    long_bow.owned = false;
     return long_bow;
 }
 
@@ -53,6 +74,7 @@ weapon createShortSword(){
     short_sword.bonus = 2;
     short_sword.price = 1000;
     short_sword.equiped = false;
+    short_sword.owned = false;
     return short_sword;
 }
 
@@ -62,6 +84,7 @@ weapon createSpear(){
     spear.bonus = 2;
     spear.price = 100;
     spear.equiped = false;
+    spear.owned = false;
     return spear;
 }
 
@@ -71,6 +94,7 @@ weapon createBattleAxe(){
     battle_axe.bonus = 2;
     battle_axe.price = 3000;
     battle_axe.equiped = false;
+    battle_axe.owned = false;
     return battle_axe;
 }
 
@@ -80,20 +104,21 @@ weapon createScythe(){
     scythe.bonus = 3;
     scythe.price = 5000;
     scythe.equiped = false;
+    scythe.owned = false;
     return scythe;
 }
 
-personagem inicia(personagem character){
+personagem inicia(){
+    personagem character;
     character.lvl = 1;
-    character.weapons[0].name = "Short Bow";
-    character.weapons[1].name = "Iron Dagger";
-    character.weapons[0].price = 2500;
-    character.weapons[1].price = 200;
-    character.weapons[0].bonus = 0;
-    character.weapons[1].bonus = 0;
-    character.weapons[0].equiped = true;
-    character.weapons[1].equiped = true;
-    character.money = 0;
+    character.weapons[0] = createShortBow();
+    character.weapons[1] = createIronDagger();
+    character.weapons[2] = createLongBow();
+    character.weapons[3] = createShortSword();
+    character.weapons[4] = createSpear();
+    character.weapons[5] = createBattleAxe();
+    character.weapons[6] = createScythe();
+    character.money = 100;
     character.upgrades = character.lvl*10;
     character.xp = 0;
     character.atk = 1;
@@ -866,16 +891,44 @@ personagem store(personagem character){
             }
         }
     }
-    else if(opt == '2'){
+    /*else if(opt == '2'){
         cout << "Estamos com o estoque esgotado. Volte novamente mais tarde" << endl;
-    }
-    /*
+    }*/
+    
     else if(opt == '2'){
         cout << "We have several options ready for you" << endl;
         cout << "Would you like to see armours[A] or weapons[W]?" << endl;
         cin >> opt;
+        system("clear");
+        if(opt == 'A' || opt == 'a'){
+            cout << "We apologize, we are still waiting for our shipment to arrive" << endl;
+        }
+        else if (opt == 'W' || opt == 'w'){
+            cout << "We have the following weapons available" << endl;
+            cout << endl;
+            cout << "ID |    Name     | Price | Bonus" << endl;
+            cout << "1  |    Spear    |  100  |   1  " << endl;
+            cout << "2  | Short Sword | 1000  |   1  " << endl;
+            cout << "3  | Battle Axe  | 3000  |   2  " << endl;
+            cout << "4  |   Long Bow  | 5000  |   2  " << endl;
+            cout << endl;
+            if (character.lvl>3) cout << "5  |    Scythe   | 5000  |   3  " << endl;
+            cout << "Let me know if any of them caught your eye" << endl;
+            cin >> opt;
+            if (opt == '1'){
+                if (character.money>=100){
+                    system("clear");
+                    character.money = character.money-100;
+                    character.weapons[4].owned = true;
+                    cout << "You acquired a Spear. You can change your weapons in the inventory" << endl;
+                    system("sleep 2");
+                }
+                else{
+                    cout << "You don't have enough money" << endl;
+                }
+            }
+        }
     }
-    */
     else if(opt == 3){
         return character;
     }
@@ -912,6 +965,10 @@ personagem heal(personagem character, bool went){
                 chance = rand() % (20) + 1 + character.luck;
             }
             if(opt == 1){
+                if (character.hp + ceil(0.25 * (10 + 2 * character.vit)) > 10 + 2 * character.vit){
+                    menor = 10 + 2 * character.vit - character.hp;
+                }
+                else menor = ceil(0.25 * (10 + 2 * character.vit));
                 system("clear");
                 if(chance>19){
                     cout << "You know what? Take a free trial. No fees for ya" << endl;
@@ -926,10 +983,6 @@ personagem heal(personagem character, bool went){
                 }
                 else{
                     if(character.money >= 5){
-                        if (character.hp + ceil(0.25 * (10 + 2 * character.vit)) > 10 + 2 * character.vit){
-                            menor = 10 + 2 * character.vit - character.hp;
-                        }
-                        else menor = ceil(0.25 * (10 + 2 * character.vit));
                         for(int time = 0; time < menor; time++){
                             system("clear");
                             character.hp++;
@@ -945,6 +998,10 @@ personagem heal(personagem character, bool went){
                 }
             }
             else if(opt == 2){
+                if (character.hp + ceil(0.5 * (10 + 2 * character.vit)) > 10 + 2 * character.vit){
+                    menor = 10 + 2 * character.vit - character.hp;
+                }
+                else menor = ceil(0.5 * (10 + 2 * character.vit));
                 if(chance>19){
                     cout << "You know what? Take a free trial. No fees for ya" << endl;
                     for(int time = 0; time < menor; time++){
@@ -958,10 +1015,6 @@ personagem heal(personagem character, bool went){
                 }
                 else{
                     if(character.money >= 9){
-                        if (character.hp + ceil(0.5 * (10 + 2 * character.vit)) > 10 + 2 * character.vit){
-                            menor = 10 + 2 * character.vit - character.hp;
-                        }
-                        else menor = ceil(0.5 * (10 + 2 * character.vit));
                         for(int time = 0; time < menor; time++){
                             system("clear");
                             character.hp++;
@@ -976,9 +1029,10 @@ personagem heal(personagem character, bool went){
                 }
             }
             else if(opt == 3){
+                menor = 10 + 2 * character.vit - character.hp;
                 if(chance>19){
                     cout << "You know what? Take a free trial. No fees for ya" << endl;
-                    for(int time = 0; time < (10+2*character.vit); time++){
+                    for(int time = 0; time < menor; time++){
                         system("clear");
                         character.hp++;
                         cout << character.name << "'s hp: " << character.hp << "/" << 10 + 2 * character.vit << endl;
