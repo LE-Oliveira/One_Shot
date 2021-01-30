@@ -13,6 +13,7 @@ class weapon{
         std::string name;
         int bonus, price, amount;
         bool equiped = false, owned = false;
+        std::string tipe; 
 };
 
 class armour{
@@ -28,8 +29,7 @@ class personagem{
         weapon weapons[10];
         armour armors[5];
         item items[50];
-        char name[20];  
-        personagem inicia(personagem perso);
+        char name[20];
 };
 
 class creature{

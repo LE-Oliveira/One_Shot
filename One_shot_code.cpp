@@ -1,4 +1,5 @@
-#include "funcoes.h"
+//#include "funcoes.h"
+#include "funcoes.cpp"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,7 +9,7 @@ int main(){
     int aux = 1;
     bool went = true;
     char opt;
-    personagem perso = inicia(perso);
+    personagem perso = inicia();
     item basic_dagger, basic_bow;
     cout << "Welcome to this chaotic world, where villages are wiped out by monsters and heroes are lacking" << endl;
     system("sleep 2");
@@ -70,6 +71,7 @@ int main(){
         cout << "What do you want to do?" << endl;
         cout << "1 - Battle" << endl;
         cout << "2 - See points" << endl;
+        cout << "3 - Rest and heal" << endl;
         cout << "4 - Access inventory" << endl;
         cout << "5 - Go to the store" << endl;
         cout << "6 - Escape the game" << endl;
@@ -79,7 +81,7 @@ int main(){
             went = false;
         }
         else if (aux==2){
-            perso = up_stat(perso);
+            perso = upStat(perso);
         }
         else if (aux==3){
             perso = heal(perso, went);
