@@ -86,7 +86,7 @@ weapon createSpear(){
     weapon spear;
     spear.name = "Lança";
     spear.bonus = 2;
-    spear.price = 100;
+    spear.price = 1000;
     spear.equiped = false;
     spear.owned = false;
     spear.tipe = "Both";
@@ -1193,3 +1193,4 @@ personagem heal(personagem character, bool went){
     system("clear");
     return character;
 }
+
