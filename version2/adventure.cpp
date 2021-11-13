@@ -10,10 +10,12 @@ int main(){
     Beast wolf("wolf");
     Beast goblin("goblin");
     Beast chitine("chitine");
+    Beast greatWolf("great wolf");
     Character character(name);
     character.setBeast(&wolf);
     character.setBeast(&goblin);
     character.setBeast(&chitine);
+    character.setBeast(&greatWolf);
     system("clear");
     cout << "Now that you gave your character a name, you need to build it up" << endl;
     system("sleep 2");
@@ -35,7 +37,7 @@ int main(){
         cin >> aux;
         if(aux == 1){
             if(character.getHp() == 0){
-                cout << "You have no remainnig hp, rest&heal before fighting again" << endl;
+                cout << "You have no remaining hp, rest&heal before fighting again" << endl;
                 system("sleep 2");
             }
             else{

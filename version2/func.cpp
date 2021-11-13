@@ -16,12 +16,22 @@ void start(){
     cout << "Before we start, what should your character be known as?" << endl;
 }
 
-void battleMenu(){
+void battleMenu(Character perso){
     cout << "It is your turn" << endl;
     cout << "What you want to do?" <<endl;
-    cout << "1 - Attack him with a melee weapon" << endl;
-    cout << "2 - Attack him with a ranged weapon" << endl;
+    cout << "1 - " << perso.getMeleeWeapon().getSentence() << endl;
+    cout << "2 - " << perso.getRangedWeapon().getSentence() << endl;
     cout << "3 - Run away" << endl;
+}
+
+void cutScene(Character perso){
+    system("clear");
+    cout << " 'OH NO!! Something must be wrong! The ground wasn't supossed to be shaking, neither the clouds should be funneling like a-- OH S**T!! THAT'S A MOTHERDUCKING MAGICAL STORM!! HANG OOONNN!!!!' " << endl;
+    system("sleep 4");
+    system("clear");
+    system("sleep 5");
+    cout << "It seems you've got stronger, but so do the hostile creatures" << endl;
+    perso.setUpgrade(5);
 }
 
 Character battle(Character character){
@@ -33,7 +43,7 @@ Character battle(Character character){
     being = rand() % (character.getLvl() + 1) + 1;
     if(being==1){
         cout << "You find a wolf" << endl;
-        system("sleep 1");
+        system("sleep 2");
         Beast wolf("wolf");
         if(character.getDex()>wolf.getDex()){
             turn = true;
@@ -41,7 +51,7 @@ Character battle(Character character){
         while ((wolf.getHp()>0)&&(character.getHp()>0)){
             if(turn){
                 system("clear");
-                battleMenu();
+                battleMenu(character);
                 fflush(stdin);
                 cin >> attack;
                 system("clear");
@@ -50,7 +60,7 @@ Character battle(Character character){
                 if((damage<1)&&(damage>-10)) damage = 1;
                 else if(damage<-9) damage = 0;
                 if(attack==1){
-                    damage+=character.getMelee();
+                    damage+=character.getMeleeWeapon().getBonus();
                     turn = false;
                     srand(time(NULL));
                     if(hit>=20){
@@ -58,7 +68,7 @@ Character battle(Character character){
                         wolf-damage;
                         cout << "Congrats, critical slash" << endl;
                     }
-                    else if(hit+character.getMelee()>floor(10-character.getDex()/5)){
+                    else if(hit+character.getMeleeWeapon().getBonus()>floor(10-character.getDex()/5)){
                         wolf-damage;
                         cout << "You cut him" << endl;
                     }
@@ -72,13 +82,13 @@ Character battle(Character character){
                 }
                 else if(attack==2){
                     turn = false;
-                    damage+=character.getRanged();
+                    damage+=character.getRangedWeapon().getBonus();
                     if(hit>=20){
                         damage = 3*damage;
                         wolf-damage;
                         cout << "Congrats, critical pierce" << endl;
                     }
-                    else if(hit+character.getRanged()>floor(15 - character.getDex()/5)){
+                    else if(hit+character.getRangedWeapon().getBonus()>floor(15 - character.getDex()/5)){
                         damage = ceil(1.5*damage);
                         wolf-damage;
                         cout << "Your arrow pierced him" << endl;
@@ -98,11 +108,11 @@ Character battle(Character character){
             }
             else{
                 cout << "It is the wolf's turn" << endl;
-                system("sleep 1");
+                system("sleep 2");
                 system("clear");
                 srand(time(NULL));
                 attack = rand() % 2 +1;
-                damage = wolf.getAtk() - character.getDef() - character.getArmor();
+                damage = wolf.getAtk() - character.getDef() - character.getArmor().getBonus();
                 if((damage<1)&&(damage>-10)){
                     damage = 1;
                 }
@@ -116,11 +126,11 @@ Character battle(Character character){
                         character-2*damage;
                         cout << "Ouch, he dealt you a serious scratch" << endl;
                     }
-                    else if(hit>ceil(10-wolf.getDex()/5) - character.getArmor()){
+                    else if(hit>ceil(10-wolf.getDex()/5) - character.getArmor().getBonus()){
                         character-damage;
                         cout << "He scratched you" << endl;
                     }
-                    else if(hit+character.getArmor()==1){
+                    else if(hit==1){
                         cout << "How clumsy, the wolf hurt itself" << endl;
                         wolf-1;
                     }
@@ -134,11 +144,11 @@ Character battle(Character character){
                         character-3*damage;
                         cout << "Ouch, he dealt you a serious bite" << endl;
                     }
-                    else if(hit>ceil(15-wolf.getDex()/5) - character.getArmor()){
+                    else if(hit>ceil(15-wolf.getDex()/5) - character.getArmor().getBonus()){
                         character-1.5*damage;
                         cout << "He bit you" << endl;
                     }
-                    else if(hit+character.getArmor()==1){
+                    else if(hit==1){
                         cout << "How clumsy, the wolf hurt itself" << endl;
                         wolf-1;
                     }
@@ -149,7 +159,7 @@ Character battle(Character character){
             }
             cout << character.getName() <<"'s hp: " << character.getHp() << endl;
             cout << "Wolf's hp: " << wolf.getHp() << endl;
-            system("sleep 1");
+            system("sleep 2");
             system("clear");
         }
         if(wolf.getHp()<=0){
@@ -181,7 +191,7 @@ Character battle(Character character){
     }
     else if(being==2){
         cout << "You find a goblin" << endl;
-        system("sleep 1");
+        system("sleep 2");
         Beast goblin("goblin");
         if(character.getDex()>goblin.getDex()){
             turn = true;
@@ -189,7 +199,7 @@ Character battle(Character character){
         while ((goblin.getHp()>0)&&(character.getHp()>0)){
             if(turn){
                 system("clear");
-                battleMenu();
+                battleMenu(character);
                 damage = character.getAtk() - goblin.getDef();
                 if((damage<1)&&(damage>-10)){
                     damage = 1;
@@ -202,7 +212,7 @@ Character battle(Character character){
                 system("clear");
                 hit = rand() % 20 + 1 + floor(character.getLuck()/5) - floor(goblin.getLuck()/5);
                 if(attack==1){
-                    damage+=character.getMelee();
+                    damage+=character.getMeleeWeapon().getBonus();
                     turn = false;
                     srand(time(NULL));
                     if(hit>=20){
@@ -210,7 +220,7 @@ Character battle(Character character){
                         goblin-damage;
                         cout << "Congrats, critical slash" << endl;
                     }
-                    else if(hit+character.getMelee()>floor(10-character.getDex()/5)){
+                    else if(hit+character.getMeleeWeapon().getBonus()>floor(10-character.getDex()/5)){
                         goblin-damage;
                         cout << "You cut him" << endl;
                     }
@@ -224,18 +234,18 @@ Character battle(Character character){
                 }
                 else if(attack==2){
                     turn = false;
-                    damage+=character.getRanged();
+                    damage+=character.getRangedWeapon().getBonus();
                     if(hit>=20){
                         damage = 3*damage;
                         goblin-damage;
                         cout << "Congrats, critical pierce" << endl;
                     }
-                    else if(hit+character.getRanged()>floor(15-character.getDex()/5)){
+                    else if(hit+character.getRangedWeapon().getBonus()>floor(15-character.getDex()/5)){
                         damage = ceil(1.5*damage);
                         goblin-damage;
                         cout << "Your arrow pierced him" << endl;
                     }
-                    else if(hit==1+character.getRanged()){
+                    else if(hit==1){
                         cout << "Ouch, you hurt yourself" << endl;
                         character-1;
                     }
@@ -250,11 +260,11 @@ Character battle(Character character){
             }
             else{
                 cout << "It is the goblin's turn" << endl;
-                system("sleep 1");
+                system("sleep 2");
                 system("clear");
                 srand(time(NULL));
                 attack = rand() % 2 +1;
-                damage = goblin.getAtk() - character.getDef() - character.getArmor();;
+                damage = goblin.getAtk() - character.getDef() - character.getArmor().getBonus();
                 if((damage<1)&&(damage>-10)){
                     damage = 1;
                 }
@@ -269,7 +279,7 @@ Character battle(Character character){
                         character-1;
                         cout << "Ouch, he dealt you a serious slash" << endl;
                     }
-                    else if(hit>ceil(10-goblin.getDex()/5)+character.getArmor()){
+                    else if(hit>ceil(10-goblin.getDex()/5)+character.getArmor().getBonus()){
                         character-1;
                         cout << "He cut you" << endl;
                     }
@@ -288,7 +298,7 @@ Character battle(Character character){
                         character-1;
                         cout << "Ouch, he dealt you a serious concussion" << endl;
                     }
-                    else if(hit>ceil(15-goblin.getDex()/5)+character.getArmor()){
+                    else if(hit>ceil(15-goblin.getDex()/5)+character.getArmor().getBonus()){
                         character-1;
                         cout << "He threw a stone on you" << endl;
                     }
@@ -325,7 +335,7 @@ Character battle(Character character){
     }
     else if(being ==3){
         cout << "You find a chitine" << endl;
-        system("sleep 1");
+        system("sleep 2");
         Beast chitine("chitine");
         if(character.getDex()>chitine.getDex()){
             turn = true;
@@ -333,7 +343,7 @@ Character battle(Character character){
         while ((chitine.getHp()>0)&&(character.getHp()>0)){
             if(turn){
                 system("clear");
-                battleMenu();
+                battleMenu(character);
                 damage = character.getAtk() - chitine.getDef();
                 if((damage<1)&&(damage>-10)){
                     damage = 1;
@@ -347,7 +357,7 @@ Character battle(Character character){
                 srand(time(NULL));
                 hit = rand() % 20 + 1 + floor(character.getLuck()/5);
                 if(attack==1){
-                    damage+=character.getMelee();
+                    damage+=character.getMeleeWeapon().getBonus();
                     turn = false;
                     srand(time(NULL));
                     if(hit>=20){
@@ -355,7 +365,7 @@ Character battle(Character character){
                         chitine-damage;
                         cout << "Congrats, critical slash" << endl;
                     }
-                    else if(hit+character.getMelee()>floor(10-character.getDex()/5)){
+                    else if(hit+character.getMeleeWeapon().getBonus()>floor(10-character.getDex()/5)){
                         chitine-damage;
                         cout << "You cut him" << endl;
                     }
@@ -369,13 +379,13 @@ Character battle(Character character){
                 }
                 else if(attack==2){
                     turn = false;
-                    damage+=character.getRanged();
+                    damage+=character.getRangedWeapon().getBonus();
                     if(hit>=20){
                         damage = 3*damage;
                         chitine-damage;
                         cout << "Congrats, critical pierce" << endl;
                     }
-                    else if(hit+character.getRanged()>floor(15-character.getDex()/5)){
+                    else if(hit+character.getRangedWeapon().getBonus()>floor(15-character.getDex()/5)){
                         damage = ceil(1.5*damage);
                         chitine-damage;
                         cout << "Your arrow pierced him" << endl;
@@ -395,11 +405,11 @@ Character battle(Character character){
             }
             else{
                 cout << "It is the chitine's turn" << endl;
-                system("sleep 1");
+                system("sleep 2");
                 system("clear");
                 srand(time(NULL));
                 attack = rand() % 2 +1;
-                damage = chitine.getAtk() - character.getDef() - character.getArmor();
+                damage = chitine.getAtk() - character.getDef() - character.getArmor().getBonus();
                 if((damage<1)&&(damage>-10)){
                     damage = 1;
                 }
@@ -414,7 +424,7 @@ Character battle(Character character){
                         character-2*damage;
                         cout << "Ouch, he dealt you a serious slash" << endl;
                     }
-                    else if(hit - character.getArmor()>ceil(10-chitine.getDex()/5)){
+                    else if(hit - character.getArmor().getBonus()>ceil(10-chitine.getDex()/5)){
                         character-damage;
                         cout << "He cut you" << endl;
                     }
@@ -434,7 +444,7 @@ Character battle(Character character){
                             character-2*damage;
                             cout << "Ouch, it dealt you a serious slash" << endl;
                         }
-                        else if(hit - character.getArmor()>ceil(15-chitine.getDex()/5)){
+                        else if(hit - character.getArmor().getBonus()>ceil(15-chitine.getDex()/5)){
                             character-damage;
                             cout << "It cut you" << endl;
                         }
@@ -489,12 +499,162 @@ Character battle(Character character){
         system("sleep 2");
 
     }
+    else if(being==4){
+        cout << "You find a great wolf, beware" << endl;
+        system("sleep 2");
+        Beast greatWolf("great wolf");
+        if(character.getDex()>greatWolf.getDex()){
+            turn = true;
+        }
+        while ((greatWolf.getHp()>0)&&(character.getHp()>0)){
+            if(turn){
+                system("clear");
+                battleMenu(character);
+                fflush(stdin);
+                cin >> attack;
+                system("clear");
+                hit = rand() % 20 + 1 + floor(character.getLuck()/5) - floor(greatWolf.getLuck()/5);
+                damage = character.getAtk() - greatWolf.getDef();
+                if((damage<1)&&(damage>-10)) damage = 1;
+                else if(damage<-9) damage = 0;
+                if(attack==1){
+                    damage+=character.getMeleeWeapon().getBonus();
+                    turn = false;
+                    srand(time(NULL));
+                    if(hit>=20){
+                        damage = 2*damage;
+                        greatWolf-damage;
+                        cout << "Congrats, critical slash" << endl;
+                    }
+                    else if(hit+character.getMeleeWeapon().getBonus()>floor(10-character.getDex()/5)){
+                        greatWolf-damage;
+                        cout << "You cut him" << endl;
+                    }
+                    else if(hit==1){
+                        cout << "Ouch, you hurt yourself" << endl;
+                        character-1;
+                    }
+                    else{
+                        cout << "Oh, you missed the attack" << endl;
+                    }
+                }
+                else if(attack==2){
+                    turn = false;
+                    damage+=character.getRangedWeapon().getBonus();
+                    if(hit>=20){
+                        damage = 3*damage;
+                        greatWolf-damage;
+                        cout << "Congrats, critical pierce" << endl;
+                    }
+                    else if(hit+character.getRangedWeapon().getBonus()>floor(15 - character.getDex()/5)){
+                        damage = ceil(1.5*damage);
+                        greatWolf-damage;
+                        cout << "Your arrow pierced him" << endl;
+                    }
+                    else if(hit==1){
+                        cout << "Ouch, you hurt yourself" << endl;
+                        character-1;
+                    }
+                    else{
+                        cout << "Oh, you missed the attack" << endl;
+                    }
+                }
+                else if(attack==3){
+                    cout << "You ran away" << endl;
+                    break;
+                }
+            }
+            else{
+                cout << "It is the great wolf's turn" << endl;
+                system("sleep 2");
+                system("clear");
+                srand(time(NULL));
+                attack = rand() % 2 +1;
+                damage = greatWolf.getAtk() - character.getDef() - character.getArmor().getBonus();
+                if((damage<1)&&(damage>-10)){
+                    damage = 1;
+                }
+                else if(damage<-9){
+                    damage = 0;
+                }
+                hit = rand() % 20 + 1 + floor(greatWolf.getLuck()/5) - floor(character.getLuck()/5);
+                if(attack==1){
+                    turn = true;
+                    if(hit>=20){
+                        character-2*damage;
+                        cout << "Ouch, he dealt you a serious scratch" << endl;
+                    }
+                    else if(hit>ceil(10-greatWolf.getDex()/5) - character.getArmor().getBonus()){
+                        character-damage;
+                        cout << "He scratched you" << endl;
+                    }
+                    else if(hit+character.getArmor().getBonus()==1){
+                        cout << "How clumsy, the great wolf hurt itself" << endl;
+                        greatWolf-1;
+                    }
+                    else{
+                        cout << "Hooray, you dodged the attack" << endl;
+                    }
+                }
+                else if(attack==2){
+                    turn = true;
+                    if(hit>=20){
+                        character-3*damage;
+                        cout << "Ouch, he dealt you a serious bite" << endl;
+                    }
+                    else if(hit>ceil(15-greatWolf.getDex()/5) - character.getArmor().getBonus()){
+                        character-1.5*damage;
+                        cout << "He bit you" << endl;
+                    }
+                    else if(hit==1){
+                        cout << "How clumsy, the great wolf hurt itself" << endl;
+                        greatWolf-1;
+                    }
+                    else{
+                        cout << "Hooray, you dodged the attack" << endl;
+                    }
+                }
+            }
+            cout << character.getName() <<"'s hp: " << character.getHp() << endl;
+            cout << "great wolf's hp: " << greatWolf.getHp() << endl;
+            system("sleep 2");
+            system("clear");
+        }
+        if(greatWolf.getHp()<=0){
+            cout << "Congratulations, you just defeated a great wolf" << endl;
+            srand(time(NULL));
+            if((rand() % 5 + ceil(1+character.getLuck()/10) >= 5)){
+                srand(time(NULL));
+                qtd = rand() % 4 + ceil(1 + character.getLuck()/10);
+                cout << "It's your lucky day, you found " << qtd << " Great Wolf's Claws" << endl;
+                cout << "With this claws you can earn some money on the store" << endl;
+                Loot gClaws("Great Wolf's Claws", 10, qtd, character.getBeasts().at(0));
+                character.setLoot(gClaws); 
+            }
+            if((rand() % 10 + ceil(1+character.getLuck()/10)) >= 10){
+                srand(time(NULL));
+                qtd = rand() % 10 + ceil(1 + character.getLuck()/10);
+                cout << "It's your lucky day, you found " << qtd << " packs of Great Wolf's Fur" << endl;
+                cout << "You can sell those packs on the store" << endl;
+                Loot gFur("Great Wolf's Fur", 2, qtd, character.getBeasts().at(0));
+                character.setLoot(gFur); 
+            }
+            character*(greatWolf.getXp());
+        }
+        else if(character.getHp()<=0){
+            cout << "Oh, the great wolf was too strong for you" << endl;
+            cout << "Better luck next time" << endl;
+        }
+        system("sleep 2");
+    }
+  
     if(character.getXp() >= (character.getLvl()*10+pow(5,character.getLvl()))*10){
         character.setLvl();
-        character.setUpgrade();
+        character.setUpgrade(10);
         system("clear");
         cout << "Congrats, " << character.getName() << " upgraded its level to " << character.getLvl() << endl;
         system("sleep 2");
+        if(character.getLvl() == 5) cutScene(character);
     }
     return character;
 }

@@ -36,4 +36,11 @@ Armor::Armor(string name){
         a_equiped = false;
         a_owned = false;
     }
+    else if(name == "null"){
+        i_name = "";
+        i_price = 0;
+        a_bonus = 0;
+        a_equiped = false;
+        a_owned = false;
+    }
 }

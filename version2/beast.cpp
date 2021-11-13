@@ -30,4 +30,12 @@ Beast::Beast(string name){
         b_luck = rand() % 5 + 1;
         b_xp = b_hp + b_dex*5 + b_atk*4 + b_def*3 + ceil(b_luck/2);
     }
+    else if(name == "great wolf"){
+        b_hp = rand() % 10 + 15 + rand() % 10 + rand() % 10 + rand() % 10 + rand() % 10;
+        b_atk = rand() % 4 + rand() % 4 + 10;
+        b_def = rand () % 3 + 6;
+        b_dex = rand () % 7 + 11;
+        b_luck = rand() % 5 + 7;
+        b_xp = b_hp + b_dex*5 + b_atk*4 + b_def*3 + ceil(b_luck/2);
+    }
 }

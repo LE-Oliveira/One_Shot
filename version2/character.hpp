@@ -24,6 +24,7 @@ class Character{
         //Set
         void setLvl(){c_lvl++;};
         void setUpgrade(){c_upgrades+=10;};
+        void setUpgrade(int up){c_upgrades+=up;};
         void setAtk(int plus){c_atk+=plus;};
         void setVit(int plus){c_vit+=plus;};
         void setDef(int plus){c_def+=plus;};
@@ -38,9 +39,10 @@ class Character{
 
         //Get
         string getName(){return c_name;};
-        int getRanged();
-        int getMelee();
-        int getArmor();
+        Weapon getRangedWeapon();
+        Weapon getMeleeWeapon();
+        Armor getArmor();
+        int getBonus();
         int getDef(){return c_def;};
         int getAtk(){return c_atk;};
         int getDex(){return c_dex;};
@@ -64,6 +66,7 @@ class Character{
         void store();
 
         //Operators
+        void operator + (string upgrade){c_upgrades+=10;};
         void operator + (Loot loot){c_inventory.push_back(loot);};
         void operator + (int money){setMoney(money);};
         void operator * (int xp){setXp(xp);};

@@ -7,6 +7,7 @@ class Weapon: public Item{
     private:
         int w_bonus;
         bool w_equiped, w_owned, w_ranged, w_melee;
+        string w_sentence;
     public:
         Weapon();
         Weapon(string name);
@@ -15,6 +16,7 @@ class Weapon: public Item{
         void setEquiped(bool equiped){w_equiped = equiped;};
         void setOwned(bool owned){w_owned = owned;};
 
+        string getSentence(){return w_sentence;};
         bool getEquiped(){return w_equiped;};
         bool getOwned(){return w_owned;};
         bool getRanged(){return w_ranged;};

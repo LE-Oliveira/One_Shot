@@ -7,7 +7,8 @@
 #include <math.h>
 
 Character::Character(string name){
-    c_def=c_atk=c_dex=c_luck=c_vit=c_lvl=1;
+    c_def = c_atk = c_dex = c_luck = c_vit = 1;
+    c_lvl = 1;
     c_upgrades = 10*c_lvl;
     c_xp = 0;
     c_hp = 10+2*c_vit;
@@ -115,6 +116,15 @@ void Character::setStats(string aux){
             c_hp+=2;
         }
         else if(aux == "up" && opt == '6') break;
+        else if(opt == '7'){
+            c_upgrades = 0;
+            c_atk = 12;
+            c_luck = 15;
+            c_dex = 15;
+            c_def = 11;
+            c_vit = 12;
+            c_hp = 34;
+        }
     }
 }
 
@@ -206,7 +216,7 @@ void Character::heal(bool went){
         cout << "It seems that you are hurt" << endl;
         cout << "We have the best and confiest bedroom over the region" << endl;
         cout << "Do you wish to rest for a bit in the Sweet Dreams Inn? [Y/N]" << endl;
-        fflush(stdin);
+        fflush(stdin);  
         cin >> aux;
         if (aux=='Y'||aux=='y'){
             system("clear");
@@ -667,8 +677,8 @@ void Character::store(){
             cout << "ID |    Name     | Price | Bonus" << endl;
             cout << "1  |    Spear    | 1000  |   2  " << endl;
             cout << "2  | Short Sword | 1000  |   2  " << endl;
-            cout << "3  | Battle Axe  | 2500  |   3  " << endl;
-            cout << "4  |   Long Bow  | 3750  |   2  " << endl;
+            cout << "3  |Battle Hammer| 2500  |   3  " << endl;
+            cout << "4  |   Long Bow  | 3750  |   4  " << endl;
             cout << endl;
             if (getLvl()>3) cout << "5  |    Scythe   | 5000  |   5  " << endl;
             cout << "Let me know if any of them caught your eye. Take this hint: just give me the ID and I'll get it for ya" << endl;
@@ -697,7 +707,7 @@ void Character::store(){
             else if (opt == '3'){
                 if (getMoney()>=2500){
                     system("clear");
-                    Weapon weapon("Battle Axe");
+                    Weapon weapon("Battle Hammer");
                     setWeapons(weapon);
                 }
                 else{
@@ -733,23 +743,26 @@ void Character::store(){
     system("clear");
 }
 
-int Character::getRanged(){
+Weapon Character::getRangedWeapon(){
     for(int i=0; i<c_weapons.size(); i++){
-        if(c_weapons.at(i).getEquiped()&&c_weapons.at(i).getRanged()) return c_weapons.at(i).getBonus();
+        if(c_weapons.at(i).getEquiped()&&c_weapons.at(i).getRanged()) return c_weapons.at(i);
     }
-    return 0;
+    Weapon w("null");
+    return w;
 }
 
-int Character::getMelee(){
+Weapon Character::getMeleeWeapon(){
     for(int i=0; i<c_weapons.size(); i++){
-        if(c_weapons.at(i).getEquiped()&&c_weapons.at(i).getMelee()) return c_weapons.at(i).getBonus();
+        if(c_weapons.at(i).getEquiped()&&c_weapons.at(i).getMelee()) return c_weapons.at(i);
     }
-    return 0;
+    Weapon w("null");
+    return w;
 }
 
-int Character::getArmor(){
+Armor Character::getArmor(){
     for(int i=0; i<c_armors.size(); i++){
-        if(c_armors.at(i).getEquiped()) return c_armors.at(i).getBonus();
+        if(c_armors.at(i).getEquiped()) return c_armors.at(i);
     }
-    return 0;
+    Armor obj("null");
+    return obj; 
 }
