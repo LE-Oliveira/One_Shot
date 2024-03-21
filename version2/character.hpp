@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <stdlib.h>
 #include "item.hpp"
 #include "armor.hpp"
 #include "weapon.hpp"
@@ -18,7 +19,6 @@ class Character{
         vector <Beast*> c_enemies;
         string c_name;
     public:
-        Character();
         Character(string name);
 
         //Set

@@ -1,6 +1,8 @@
 #ifndef BEAST_HPP
 #define BEAST_HPP
 #include <iostream>
+#include <time.h>
+#include <math.h>
 
 using namespace std;
 

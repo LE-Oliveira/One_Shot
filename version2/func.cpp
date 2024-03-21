@@ -1,18 +1,16 @@
 #include "func.hpp"
 #include "character.hpp"
-#include <time.h>
-#include <math.h>
 
 void start(){
     cout << "Welcome to this chaotic world, where villages are wiped out by monsters and heroes are lacking" << endl;
-    system("sleep 2");
-    system("clear");
+    Sleep(2000);
+    system("cls");
     cout << "You'll start your adventure at Brengash Village" << endl;
-    system("sleep 2");
-    system("clear");
+    Sleep(2000);
+    system("cls");
     cout << "Will you be able to change this world's destiny and defeat the Abysmal Lord?" << endl;
-    system("sleep 2");
-    system("clear");
+    Sleep(2000);
+    system("cls");
     cout << "Before we start, what should your character be known as?" << endl;
 }
 
@@ -25,17 +23,17 @@ void battleMenu(Character perso){
 }
 
 void cutScene(Character perso){
-    system("clear");
+    system("cls");
     cout << " 'OH NO!! Something must be wrong! The ground wasn't supossed to be shaking, neither the clouds should be funneling like a-- OH S**T!! THAT'S A MOTHERDUCKING MAGICAL STORM!! HANG OOONNN!!!!' " << endl;
-    system("sleep 4");
-    system("clear");
-    system("sleep 5");
+    Sleep(4000);
+    system("cls");
+    Sleep(5000);
     cout << "It seems you've got stronger, but so do the hostile creatures" << endl;
     perso.setUpgrade(5);
 }
 
 Character battle(Character character){
-    system("clear");
+    system("cls");
     bool turn = false;
     int being, attack, damage, hit, qtd, i, chance;
     string aux;
@@ -43,18 +41,18 @@ Character battle(Character character){
     being = rand() % (character.getLvl() + 1) + 1;
     if(being==1){
         cout << "You find a wolf" << endl;
-        system("sleep 2");
+        Sleep(2000);
         Beast wolf("wolf");
         if(character.getDex()>wolf.getDex()){
             turn = true;
         }
         while ((wolf.getHp()>0)&&(character.getHp()>0)){
             if(turn){
-                system("clear");
+                system("cls");
                 battleMenu(character);
                 fflush(stdin);
                 cin >> attack;
-                system("clear");
+                system("cls");
                 hit = rand() % 20 + 1 + floor(character.getLuck()/5) - floor(wolf.getLuck()/5);
                 damage = character.getAtk() - wolf.getDef();
                 if((damage<1)&&(damage>-10)) damage = 1;
@@ -108,8 +106,8 @@ Character battle(Character character){
             }
             else{
                 cout << "It is the wolf's turn" << endl;
-                system("sleep 2");
-                system("clear");
+                Sleep(2000);
+                system("cls");
                 srand(time(NULL));
                 attack = rand() % 2 +1;
                 damage = wolf.getAtk() - character.getDef() - character.getArmor().getBonus();
@@ -159,8 +157,8 @@ Character battle(Character character){
             }
             cout << character.getName() <<"'s hp: " << character.getHp() << endl;
             cout << "Wolf's hp: " << wolf.getHp() << endl;
-            system("sleep 2");
-            system("clear");
+            Sleep(2000);
+            system("cls");
         }
         if(wolf.getHp()<=0){
             cout << "Congratulations, you just defeated a wolf" << endl;
@@ -187,18 +185,18 @@ Character battle(Character character){
             cout << "Oh, the wolf was too strong for you" << endl;
             cout << "Better luck next time" << endl;
         }
-        system("sleep 2");
+        Sleep(2000);
     }
     else if(being==2){
         cout << "You find a goblin" << endl;
-        system("sleep 2");
+        Sleep(2000);
         Beast goblin("goblin");
         if(character.getDex()>goblin.getDex()){
             turn = true;
         }
         while ((goblin.getHp()>0)&&(character.getHp()>0)){
             if(turn){
-                system("clear");
+                system("cls");
                 battleMenu(character);
                 damage = character.getAtk() - goblin.getDef();
                 if((damage<1)&&(damage>-10)){
@@ -209,7 +207,7 @@ Character battle(Character character){
                 }
                 fflush(stdin);
                 cin >> attack;
-                system("clear");
+                system("cls");
                 hit = rand() % 20 + 1 + floor(character.getLuck()/5) - floor(goblin.getLuck()/5);
                 if(attack==1){
                     damage+=character.getMeleeWeapon().getBonus();
@@ -260,8 +258,8 @@ Character battle(Character character){
             }
             else{
                 cout << "It is the goblin's turn" << endl;
-                system("sleep 2");
-                system("clear");
+                Sleep(2000);
+                system("cls");
                 srand(time(NULL));
                 attack = rand() % 2 +1;
                 damage = goblin.getAtk() - character.getDef() - character.getArmor().getBonus();
@@ -313,8 +311,8 @@ Character battle(Character character){
             }
             cout << character.getName() <<"'s hp: " << character.getHp() << endl;
             cout << "Goblin's hp: " << goblin.getHp() << endl;
-            system("sleep 2");
-            system("clear");
+            Sleep(2000);
+            system("cls");
         }
         if(goblin.getHp()<=0){
             cout << "Congratulations, you just defeated the goblin" << endl;
@@ -331,18 +329,18 @@ Character battle(Character character){
             cout << "Oh, the goblin was too strong for you" << endl;
             cout << "Better luck next time" << endl;
         }
-        system("sleep 2");
+        Sleep(2000);
     }
     else if(being ==3){
         cout << "You find a chitine" << endl;
-        system("sleep 2");
+        Sleep(2000);
         Beast chitine("chitine");
         if(character.getDex()>chitine.getDex()){
             turn = true;
         }
         while ((chitine.getHp()>0)&&(character.getHp()>0)){
             if(turn){
-                system("clear");
+                system("cls");
                 battleMenu(character);
                 damage = character.getAtk() - chitine.getDef();
                 if((damage<1)&&(damage>-10)){
@@ -353,7 +351,7 @@ Character battle(Character character){
                 }
                 fflush(stdin);
                 cin >> attack;
-                system("clear");
+                system("cls");
                 srand(time(NULL));
                 hit = rand() % 20 + 1 + floor(character.getLuck()/5);
                 if(attack==1){
@@ -405,8 +403,8 @@ Character battle(Character character){
             }
             else{
                 cout << "It is the chitine's turn" << endl;
-                system("sleep 2");
-                system("clear");
+                Sleep(2000);
+                system("cls");
                 srand(time(NULL));
                 attack = rand() % 2 +1;
                 damage = chitine.getAtk() - character.getDef() - character.getArmor().getBonus();
@@ -458,8 +456,8 @@ Character battle(Character character){
             }
             cout << character.getName() <<"'s hp: " << character.getHp() << endl;
             cout << "Chitine's hp: " << chitine.getHp() << endl;
-            system("sleep 2");
-            system("clear");
+            Sleep(2000);
+            system("cls");
         }
         if(chitine.getHp()<=0){
             cout << "Congratulations, you just defeated the chitine" << endl;
@@ -496,23 +494,23 @@ Character battle(Character character){
             cout << "Oh, the chitine was too strong for you" << endl;
             cout << "Better luck next time" << endl;
         }
-        system("sleep 2");
+        Sleep(2000);
 
     }
     else if(being==4){
         cout << "You find a great wolf, beware" << endl;
-        system("sleep 2");
+        Sleep(2000);
         Beast greatWolf("great wolf");
         if(character.getDex()>greatWolf.getDex()){
             turn = true;
         }
         while ((greatWolf.getHp()>0)&&(character.getHp()>0)){
             if(turn){
-                system("clear");
+                system("cls");
                 battleMenu(character);
                 fflush(stdin);
                 cin >> attack;
-                system("clear");
+                system("cls");
                 hit = rand() % 20 + 1 + floor(character.getLuck()/5) - floor(greatWolf.getLuck()/5);
                 damage = character.getAtk() - greatWolf.getDef();
                 if((damage<1)&&(damage>-10)) damage = 1;
@@ -566,8 +564,8 @@ Character battle(Character character){
             }
             else{
                 cout << "It is the great wolf's turn" << endl;
-                system("sleep 2");
-                system("clear");
+                Sleep(2000);
+                system("cls");
                 srand(time(NULL));
                 attack = rand() % 2 +1;
                 damage = greatWolf.getAtk() - character.getDef() - character.getArmor().getBonus();
@@ -617,8 +615,8 @@ Character battle(Character character){
             }
             cout << character.getName() <<"'s hp: " << character.getHp() << endl;
             cout << "great wolf's hp: " << greatWolf.getHp() << endl;
-            system("sleep 2");
-            system("clear");
+            Sleep(2000);
+            system("cls");
         }
         if(greatWolf.getHp()<=0){
             cout << "Congratulations, you just defeated a great wolf" << endl;
@@ -645,15 +643,15 @@ Character battle(Character character){
             cout << "Oh, the great wolf was too strong for you" << endl;
             cout << "Better luck next time" << endl;
         }
-        system("sleep 2");
+        Sleep(2000);
     }
   
     if(character.getXp() >= (character.getLvl()*10+pow(5,character.getLvl()))*10){
         character.setLvl();
         character.setUpgrade(10);
-        system("clear");
+        system("cls");
         cout << "Congrats, " << character.getName() << " upgraded its level to " << character.getLvl() << endl;
-        system("sleep 2");
+        Sleep(2000);
         if(character.getLvl() == 5) cutScene(character);
     }
     return character;

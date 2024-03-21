@@ -3,8 +3,6 @@
 #include "beast.hpp"
 #include "weapon.hpp"
 #include "armor.hpp"
-#include <time.h>
-#include <math.h>
 
 Character::Character(string name){
     c_def = c_atk = c_dex = c_luck = c_vit = 1;
@@ -53,7 +51,7 @@ void Character::setWeapons(Weapon w){
         c_money-=w.getPrice();
         cout << "You acquired " << w.getName() << ". You can change your weapons in the inventory" << endl;
     }
-    system("sleep 2");
+    Sleep(2000);
 }
 
 void Character::setArmors(Armor a){
@@ -77,13 +75,13 @@ void Character::setArmors(Armor a){
         c_money-=a.getPrice();
         cout << "You acquired " << a.getName() << ". You can change your armors in the inventory" << endl;
     }
-    system("sleep 2");
+    Sleep(2000);
 }
 
 void Character::setStats(string aux){
     char opt;
     while(c_upgrades>0){
-        system("clear");
+        system("cls");
         cout << "You still have " << c_upgrades << " available" << endl;
         cout << "Please distribute them" << endl;
         cout << "1 - Constitution: " << c_def << endl;
@@ -147,11 +145,11 @@ void Character::showCharacter(){
     cout << "Luck: " << c_luck << endl;
     cout << "Vitality: " << c_vit << endl;
     cout << "HP: " << c_hp << "/" << (10+2*c_vit) << endl;
-    system("sleep 6");
+    Sleep(6000);
 }
 
 void Character::upStat(){
-    system("clear");
+    system("cls");
     int aux;
     string answer, opt;
     cout << "Points Menu" <<endl;
@@ -163,15 +161,15 @@ void Character::upStat(){
     fflush(stdin);
     cin >> aux;
     if (aux==1){
-        system("clear");
+        system("cls");
         showCharacter();
     }
     else if (aux==2){
         if (c_upgrades>0) setStats("up");
         else{
-            system("clear");
+            system("cls");
             cout << "You don't have any remaining points" << endl;
-            system("sleep 2");
+            Sleep(2000);
         }
     }
     else if (aux==3){
@@ -188,29 +186,29 @@ void Character::upStat(){
                 c_vit = 1;
                 c_hp = 12;
                 c_money = c_money - 100;
-                system("clear");
+                system("cls");
                 cout << "All stats were reset" <<endl;
-                system("sleep 2");
+                Sleep(2000);
             }
             else{
-                system("clear");
+                system("cls");
                 cout << "You don't have enough money. Defeat more enemies to get more money" << endl;
-                system("sleep 2");
+                Sleep(2000);
             }
         }
     }
     else if (aux==4){
-        system("clear");
+        system("cls");
         cout << "You have " << c_xp << " experience points" << endl;
         cout << "For the next lvl you need " << (c_lvl*10+pow(5,c_lvl))*10 << " experience points" << endl;
-        system("sleep 3");
+        Sleep(3000);
     }
 }
 
 void Character::heal(bool went){
     char aux;
     int opt, menor, chance;
-    system("clear");
+    system("cls");
     if (c_hp < 10 + 2*c_vit){
         cout << c_name << "'s hp: " << c_hp << "/" << 10+2*c_vit << endl << endl;
         cout << "It seems that you are hurt" << endl;
@@ -219,7 +217,7 @@ void Character::heal(bool went){
         fflush(stdin);  
         cin >> aux;
         if (aux=='Y'||aux=='y'){
-            system("clear");
+            system("cls");
             cout << c_name << "'s hp: " << c_hp << "/" << 10 + 2 * c_vit << endl << endl;
             cout << "Money: " << c_money << endl;
             cout << "We have 3 options of services" << endl;
@@ -239,32 +237,32 @@ void Character::heal(bool went){
                     menor = 10 + 2 * c_vit - c_hp;
                 }
                 else menor = ceil(0.25 * (10 + 2 * c_vit));
-                system("clear");
+                system("cls");
                 if(chance>19){
                     cout << "You know what? Take a free trial. No fees for ya" << endl;
                     for(int time = 0; time < menor; time++){
-                        system("clear");
+                        system("cls");
                         c_hp++;
                         cout << c_name << "'s hp: " << c_hp << "/" << 10 + 2 * c_vit << endl;
                         cout << "Resting" << endl;
-                        system("sleep 0.05");
+                        Sleep(50);
                     }
                     cout << "After a rest in a bed you feel a bit better" << endl;
                 }
                 else{
                     if(c_money >= 5){
                         for(int time = 0; time < menor; time++){
-                            system("clear");
+                            system("cls");
                             c_hp++;
                             cout << c_name << "'s hp: " << c_hp << "/" << 10 + 2 * c_vit << endl;
                             cout << "Resting" << endl;
-                            system("sleep 0.05");
+                            Sleep(50);
                         }
                         cout << "After a rest in a bed you feel a bit better" << endl;
                         c_money = c_money - 5;
                     }
                     else cout << "You don't have enough money. Sorry, we can do nothing for you" << endl;
-                    system("sleep 2");
+                    Sleep(2000);
                 }
             }
             else if(opt == 2){
@@ -275,22 +273,22 @@ void Character::heal(bool went){
                 if(chance>19){
                     cout << "You know what? Take a free trial. No fees for ya" << endl;
                     for(int time = 0; time < menor; time++){
-                        system("clear");
+                        system("cls");
                         c_hp++;
                         cout << c_name << "'s hp: " << c_hp << "/" << menor << endl;
                         cout << "Resting" << endl;
-                        system("sleep 0.05");
+                        Sleep(50);
                     }
                     cout << "After a rest in a bed you feel a bit better" << endl;
                 }
                 else{
                     if(c_money >= 9){
                         for(int time = 0; time < menor; time++){
-                            system("clear");
+                            system("cls");
                             c_hp++;
                             cout << c_name << "'s hp: " << c_hp << "/" << 10 + 2 * c_vit << endl;
                             cout << "Resting" << endl;
-                            system("sleep 0.05");
+                            Sleep(50);
                         }
                         cout << "After a rest in a confy bed you feel better" << endl;
                         c_money = c_money - 9;
@@ -303,11 +301,11 @@ void Character::heal(bool went){
                 if(chance>19){
                     cout << "You know what? Take a free trial. No fees for ya" << endl;
                     for(int time = 0; time < menor; time++){
-                        system("clear");
+                        system("cls");
                         c_hp++;
                         cout << c_name << "'s hp: " << c_hp << "/" << 10 + 2 * c_vit << endl;
                         cout << "Resting" << endl;
-                        system("sleep 0.05");
+                        Sleep(50);
                     }
                     cout << "After a rest in a bed you feel a bit better" << endl;
                 }
@@ -315,41 +313,41 @@ void Character::heal(bool went){
                     if(c_money >= 17){
                         menor = 10 + 2 * c_vit - c_hp;
                         for(int time = 0; time < menor; time++){
-                            system("clear");
+                            system("cls");
                             c_hp++;
                             cout << c_name << "'s hp: " << c_hp << "/" << 10 + 2 * c_vit << endl;
                             cout << "Resting" << endl;
-                            system("sleep 0.05");
+                            Sleep(50);
                         }
                         cout << "After a rest in a superbly confy bed you feel revigorated" << endl;
                         c_money = c_money - 17;
                         c_hp = 10 + 2*c_vit;
                     }
                     else cout << "You don't have enough money. Sorry, we can do nothing for you" << endl;
-                    system("sleep 2");
+                    Sleep(2000);
                 }
             }
             else if(opt == 4){
-                system("clear");
+                system("cls");
                 cout << "Okay, good luck out there" << endl;
             }
         }
         else{
-            system("clear");
+            system("cls");
             cout << "Okay, good luck out there" << endl;
         }
     }
     else{
         cout << "Oh, your health is perfect!! Came back when you have injuries" << endl;
     }
-    system("sleep 2");
-    system("clear");
+    Sleep(2000);
+    system("cls");
 }
 
 void Character::inventory(){
     int aux, auxSec, a = 0, Mequipped = -1, Requipped = -1, Aequipped = -1;
     bool item = false;
-    system("clear");
+    system("cls");
     cout << "Inventory Menu" << endl;
     cout << "1 - See Battle Items" << endl;
     cout << "2 - See Other Items" << endl;
@@ -357,7 +355,7 @@ void Character::inventory(){
     cout << "4 - Go back to previous Menu" << endl;
     fflush(stdin);
     cin >> aux;
-    system("clear");
+    system("cls");
     if (aux == 1){
         bool range = false, melee = false, armor = false;
         vector<Weapon> weapons = getWeapons();
@@ -383,7 +381,7 @@ void Character::inventory(){
         if(!melee) cout << "You have no equiped melee weapon" << endl;
         if(!range) cout << "You have no equiped ranged weapon" << endl;
         if(!armor) cout << "You have no equiped armor" << endl;
-        system("sleep 5");
+        Sleep(5000);
     }
     else if (aux==2){
         vector <Loot> loot = getLoot();
@@ -399,12 +397,12 @@ void Character::inventory(){
         }
         if (!item){
             cout << "You have no other items. Battle to find items" << endl;
-            system("sleep 2");
+            Sleep(2000);
         }
-        else system("sleep 5");
+        else Sleep(5000);
     }
     else if (aux == 3){
-        system("clear");
+        system("cls");
         cout << "Welcome to your armory" << endl;
         cout << "Would you to change something?" << endl;
         cout << "1 - Armor" << endl;
@@ -413,7 +411,7 @@ void Character::inventory(){
         fflush(stdin);
         cin >> aux;
         if (aux == 1){
-            system("clear");
+            system("cls");
             for(int j=0; j<c_armors.size(); j++){
                 if(c_armors.at(j).getOwned()){
                     if(a == 0) cout << "You have the following armors in your arsenal" << endl;
@@ -436,10 +434,10 @@ void Character::inventory(){
                 }
             }
             else cout << "You have no armor. Go to the store to aquire some gear" << endl;
-            system("sleep 2");
+            Sleep(2000);
         }
         else if(aux == 2){
-            system("clear");
+            system("cls");
             for(int j=0; j<c_weapons.size(); j++){
                 if(c_weapons.at(j).getOwned()){
                     if(a == 0) cout << "You have the following weapons in your arsenal" << endl;
@@ -470,14 +468,14 @@ void Character::inventory(){
                 }
             }
             else cout << "You have no weapon. Go to the store to aquire some gear" << endl;
-            system("sleep 2");
+            Sleep(2000);
         }
     }
 }
 
 void Character::store(){
-    system("clear");
-    int i, id, qtd, aux1 = 0; int aux2 = 0; int aux3 = 0;
+    system("cls");
+    int i, id, qtd, wCount = 0; int aCount = 0; int iCount = 0;
     char opt;
     cout << "Welcomte to the shop" << endl;
     cout << "1 - Sell Items" << endl;
@@ -485,35 +483,35 @@ void Character::store(){
     cout << "3 - Back to main menu" <<endl;
     fflush(stdin);
     cin >> opt;
-    system("clear");
+    system("cls");
     if(opt == '1'){
         for (int k=0;k<c_weapons.size();k++){
             if ((c_weapons.at(k).getAmount()>0)&&(!c_weapons.at(k).getEquiped())){
-                aux1++;
+                wCount++;
             }
         }
         for (int k=0;k<c_armors.size();k++){
             if ((c_armors.at(k).getAmount()>0)&&(!c_armors.at(k).getEquiped())){
-                aux2++;
+                aCount++;
             }
         }
         for (int k=0;k<c_inventory.size();k++){
             if (c_inventory.at(k).getAmount()>0){
-                aux3++;
+                iCount++;
             }
         }
         cout << "Do you want to sell items[I], weapons [W] or armors[A]?" << endl;
         fflush(stdin);
         cin >> opt;
-        system("clear");
+        system("cls");
         if ((opt == 'I')||(opt == 'i')){
-            if (aux3 == 0){
+            if (iCount == 0){
                 cout << "You have no items yet. Battle to acquire some more" << endl;
-                system("sleep 2");
+                Sleep(2000);
             }
-            while(aux3 > 0){  
-                aux3 = 0;
-                system("clear");
+            while(iCount > 0){  
+                iCount = 0;
+                system("cls");
                 cout << "Id |  Iten's name  |  Iten's price  |  Owned" << endl;
                 for (i=0;i<c_inventory.size();i++){
                     if(c_inventory.at(i).getAmount()>0){
@@ -526,12 +524,13 @@ void Character::store(){
                         else if(c_inventory.at(i).getPrice()<1000){
                             cout << i << "  |  " << c_inventory.at(i).getName() << "  |       " << c_inventory.at(i).getPrice() << "      |  " << c_inventory.at(i).getAmount() << endl;
                         }
+                        iCount++;
                     }
                 }
-                if (aux3 == 0){
-                    system("clear");
+                if (iCount == 0){
+                    system("cls");
                     cout << "It seems you have run out of sellable merchandise, but don't worry, you can acquire others by battling" << endl;
-                    system("sleep 3");
+                    Sleep(3000);
                     return;
                 }
                 cout << endl;
@@ -540,7 +539,7 @@ void Character::store(){
                 cin >> id;
                 if (id == 200){
                     cout << "Okay dokay, see ya" << endl;
-                    system("sleep 2");
+                    Sleep(2000);
                 } 
                 if (c_inventory.at(id).getAmount()>1){
                     cout << "How many you wanna sell?" << endl;
@@ -559,12 +558,12 @@ void Character::store(){
                     }   
                 }
                 else if(c_inventory[id].getAmount() == 1){
-                    system("clear");
+                    system("cls");
                     cout << "Alright, here's you money" << endl;
                     cout << "You got " << c_inventory.at(id).getPrice() << endl;
                     +(c_inventory[id].getPrice());
                     c_inventory.at(id).setAmount(c_inventory[id].getAmount() - 1);
-                    system("sleep 2");
+                    Sleep(2000);
                 }
             }
         }
@@ -613,7 +612,7 @@ void Character::store(){
         cout << "Would you like to see armours[A] or weapons[W]?" << endl;
         fflush(stdin);
         cin >> opt;
-        system("clear");
+        system("cls");
         if(opt == 'A' || opt == 'a'){
             cout << "We have the following armors available" << endl;
             cout << endl;
@@ -628,7 +627,7 @@ void Character::store(){
             cin >> opt;
             if (opt == '1'){
                 if (getMoney()>=100){
-                    system("clear");
+                    system("cls");
                     Armor armor("Padded Leather");
                     setArmors(armor);
                 }
@@ -636,7 +635,7 @@ void Character::store(){
             }
             else if (opt == '2'){
                 if (getMoney()>=600){
-                    system("clear");
+                    system("cls");
                     Armor armor("Ring Mail");
                     setArmors(armor);
                 }
@@ -644,7 +643,7 @@ void Character::store(){
             }
             else if (opt == '3'){
                 if (getMoney()>=4000){
-                    system("clear");
+                    system("cls");
                     Armor armor("Half Plate");
                     setArmors(armor);
                 }
@@ -652,7 +651,7 @@ void Character::store(){
             }
             else if (opt == '4'){
                 if (getMoney()>=6000){
-                    system("clear");
+                    system("cls");
                     Armor armor("Chain Mail");
                     setArmors(armor);
                 }
@@ -662,7 +661,7 @@ void Character::store(){
             }
             else if (opt == '5' && getLvl()>=3){
                 if (getMoney()>=3500){
-                    system("clear");
+                    system("cls");
                     Armor armor("Spiked Armor");
                     setArmors(armor);
                 }
@@ -686,7 +685,7 @@ void Character::store(){
             cin >> opt;
             if (opt == '1'){
                 if (getMoney()>=100){
-                    system("clear");
+                    system("cls");
                     Weapon weapon("Spear");
                     setWeapons(weapon);
                 }
@@ -696,7 +695,7 @@ void Character::store(){
             }
             else if (opt == '2'){
                 if (getMoney()>=1000){
-                    system("clear");
+                    system("cls");
                     Weapon weapon("Short Sword");
                     setWeapons(weapon);
                 }
@@ -706,7 +705,7 @@ void Character::store(){
             }
             else if (opt == '3'){
                 if (getMoney()>=2500){
-                    system("clear");
+                    system("cls");
                     Weapon weapon("Battle Hammer");
                     setWeapons(weapon);
                 }
@@ -716,7 +715,7 @@ void Character::store(){
             }
             else if (opt == '4'){
                 if (getMoney()>=3750){
-                    system("clear");
+                    system("cls");
                     Weapon weapon("Long Bow");
                     setWeapons(weapon);
                 }
@@ -726,7 +725,7 @@ void Character::store(){
             }
             else if (getLvl() > 4 && opt == '5'){
                 if (getMoney()>=5000){
-                    system("clear");
+                    system("cls");
                     Weapon weapon("Scythe");
                     setWeapons(weapon);
                 }
@@ -739,8 +738,8 @@ void Character::store(){
             }
         }
     }
-    system("sleep 2");
-    system("clear");
+    Sleep(2000);
+    system("cls");
 }
 
 Weapon Character::getRangedWeapon(){

@@ -1,6 +1,4 @@
 #include "beast.hpp"
-#include <time.h>
-#include <math.h>
 
 Beast::Beast(string name){
     srand(time(NULL));
@@ -20,7 +18,6 @@ Beast::Beast(string name){
         b_dex = rand () % 4 + 1;
         b_luck = rand () % 10 + 1;
         b_xp = b_hp + b_dex*5 + b_atk*4 + b_def*3 + ceil(b_luck/2);
-
     }
     else if(name == "chitine"){
         b_hp = rand() % 6 + 4 + rand() % 6 + rand() % 6 + rand() % 6;

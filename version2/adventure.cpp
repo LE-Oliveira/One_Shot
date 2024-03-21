@@ -1,4 +1,3 @@
-#include "character.hpp"
 #include "func.hpp"
 
 int main(){
@@ -16,15 +15,15 @@ int main(){
     character.setBeast(&goblin);
     character.setBeast(&chitine);
     character.setBeast(&greatWolf);
-    system("clear");
+    system("cls");
     cout << "Now that you gave your character a name, you need to build it up" << endl;
-    system("sleep 2");
+    Sleep(2000);
     character.setStats("init");
-    system("clear");
+    system("cls");
     character.showStats();
-    system("sleep 2");
+    Sleep(2000);
     while((aux>0)&&(aux<7)){
-        system("clear");
+        system("cls");
         cout << "Menu" << endl;
         cout << "What do you want to do?" << endl;
         cout << "1 - Battle" << endl;
@@ -38,7 +37,7 @@ int main(){
         if(aux == 1){
             if(character.getHp() == 0){
                 cout << "You have no remaining hp, rest&heal before fighting again" << endl;
-                system("sleep 2");
+                Sleep(2000);
             }
             else{
                 character = battle(character);
@@ -54,7 +53,7 @@ int main(){
         else if(aux == 5) character.store();
         else break;
     }
-    system("clear");
+    system("cls");
     cout << "Have a nice day" << endl;
     return 0;
 }
